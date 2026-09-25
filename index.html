@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Terre dans le système solaire</title>
+<meta name="description" content="Cours interactif de sciences pour la 6e SEGPA : le système solaire, les mouvements de la Terre et les phases de la Lune. Schémas animés, activités et quiz.">
+<style>
+:root{
+  --bg:#f3f5fb; --card:#ffffff; --ink:#1c2340; --muted:#5b6280;
+  --primary:#3b4fd6; --primary-ink:#ffffff; --accent:#ff9f1c; --accent-ink:#2b1a00;
+  --ok:#1f9d55; --ok-bg:#e3f7ea; --ko:#d64545; --ko-bg:#fde8e8;
+  --space:#0b1237; --space2:#1a2566; --star:#ffe27a;
+  --line:#dfe3f0; --radius:18px; --shadow:0 6px 24px rgba(28,35,64,.10);
+  --fs:18px;
+}
+html{font-size:var(--fs);-webkit-text-size-adjust:100%}
+html[data-size="2"]{--fs:21px} html[data-size="3"]{--fs:24px}
+html[data-spacing="1"] body{letter-spacing:.06em;word-spacing:.18em;line-height:1.9}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Verdana,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+h1,h2,h3{line-height:1.25;margin:0 0 .5em}
+h1{font-size:2rem} h2{font-size:1.6rem} h3{font-size:1.25rem}
+p{margin:0 0 1em}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:.7em 1.2em;min-height:48px;background:var(--primary);color:var(--primary-ink);font-weight:700;transition:transform .08s,box-shadow .2s,background .2s}
+button:hover{box-shadow:0 4px 14px rgba(59,79,214,.3)} button:active{transform:scale(.97)}
+button:focus-visible,[tabindex]:focus-visible,a:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
+button.ghost{background:#eef0fa;color:var(--primary)} button.warn{background:var(--ko)} button.ok{background:var(--ok)}
+button.accent{background:var(--accent);color:var(--accent-ink)}
+button.small{min-height:40px;padding:.45em .9em;font-size:.95rem}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+a{color:var(--primary);font-weight:700}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:50;background:var(--space);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+.bar{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bar .title{font-weight:800;font-size:1.05rem;flex:1;min-width:180px}
+.bar button{min-height:44px;padding:.4em .8em;background:var(--space2);color:#fff;font-size:1rem}
+.bar button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.progress{max-width:1100px;margin:0 auto;padding:0 16px 10px;display:flex;align-items:center;gap:12px}
+.progress .track{flex:1;height:14px;background:#2a3576;border-radius:8px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#ffd166);transition:width .5s}
+.progress .pct{font-weight:800;min-width:3.5em;text-align:right}
+
+/* ---------- Layout ---------- */
+main{max-width:1100px;margin:0 auto;padding:16px}
+.step{display:none;animation:fade .35s}
+.step.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:0 0 18px}
+.card.tint{background:#eef1ff}
+.card.ok{background:var(--ok-bg);border:2px solid var(--ok)} .card.ko{background:var(--ko-bg);border:2px solid var(--ko)}
+.badge-step{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:800;padding:.2em .8em;border-radius:999px;font-size:.9rem;margin-bottom:.6em}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.nav-btns{display:flex;justify-content:space-between;gap:12px;margin:24px 0 40px;flex-wrap:wrap}
+.keyword{background:#fff3d6;padding:0 .25em;border-radius:6px;font-weight:800}
+.say{background:#eef0fa;color:var(--primary);min-height:44px;padding:.3em .8em;border-radius:999px}
+.say[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.hint{color:var(--muted);font-size:.95rem}
+.big{font-size:1.25rem}
+.center{text-align:center}
+.flex-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* ---------- Home / sommaire ---------- */
+.hero{background:radial-gradient(circle at 20% 20%,#2b3a8f 0,var(--space) 55%);color:#fff;border-radius:var(--radius);padding:30px 24px;position:relative;overflow:hidden}
+.hero h1{font-size:2.2rem}
+.hero .stars{position:absolute;inset:0;pointer-events:none}
+.hero input{font:inherit;font-size:1.1rem;padding:.6em .9em;border-radius:12px;border:2px solid #fff;min-width:220px}
+.menu{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.menu button{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);color:var(--ink);box-shadow:var(--shadow);padding:14px 16px;border:3px solid transparent}
+.menu button .ico{font-size:2rem;width:48px;text-align:center}
+.menu button .done{margin-left:auto;font-size:1.4rem}
+.menu button.current{border-color:var(--accent)}
+
+/* ---------- Chips / drag & drop ---------- */
+.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--primary);color:var(--ink);border-radius:999px;padding:.4em .9em;font-weight:800;margin:6px;touch-action:none;user-select:none;cursor:grab;box-shadow:0 2px 8px rgba(0,0,0,.08);min-height:48px}
+.chip.selected{background:var(--accent);border-color:var(--accent);transform:scale(1.05)}
+.chip.ghost{position:fixed;pointer-events:none;z-index:999;opacity:.9;transform:scale(1.08)}
+.chip .dot{width:22px;height:22px;border-radius:50%;flex:none;border:2px solid rgba(0,0,0,.15)}
+.drop{min-height:70px;border:3px dashed #b8bfe0;border-radius:14px;padding:8px;background:#f7f8ff;transition:background .2s,border-color .2s}
+.drop.over,.drop.can{border-color:var(--primary);background:#e8ebff}
+.drop.good{border-color:var(--ok);background:var(--ok-bg);border-style:solid} .drop.bad{border-color:var(--ko);background:var(--ko-bg);border-style:solid}
+.bank{display:flex;flex-wrap:wrap;justify-content:center;min-height:90px}
+.slots{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.slot{text-align:center}
+.slot .num{font-weight:800;color:var(--muted);font-size:.9rem}
+.bins{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.bin h3{margin:0 0 6px;text-align:center}
+
+/* ---------- Quiz ---------- */
+.quiz .q{font-size:1.25rem;font-weight:800;margin-bottom:14px}
+.quiz .choices{display:grid;gap:10px}
+.quiz .choices button{background:#fff;color:var(--ink);border:3px solid var(--line);text-align:left;padding:.8em 1em;font-weight:700;display:flex;gap:10px;align-items:center}
+.quiz .choices button .letter{background:var(--primary);color:#fff;border-radius:50%;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.quiz .choices button.good{border-color:var(--ok);background:var(--ok-bg)} .quiz .choices button.bad{border-color:var(--ko);background:var(--ko-bg)}
+.quiz .choices button.good .letter{background:var(--ok)} .quiz .choices button.bad .letter{background:var(--ko)}
+.quiz .feedback{margin-top:14px;padding:14px;border-radius:12px;font-weight:700}
+.quiz .feedback.good{background:var(--ok-bg);color:#0f5b30} .quiz .feedback.bad{background:var(--ko-bg);color:#7a1f1f}
+.quiz .counter{color:var(--muted);font-weight:700;margin-bottom:6px}
+.stars{font-size:2rem;letter-spacing:.1em}
+
+/* ---------- Diagrams ---------- */
+svg{max-width:100%;height:auto;display:block}
+.diagram{background:var(--space);border-radius:var(--radius);padding:8px;position:relative}
+.diagram.light{background:#eaf2ff}
+.planet-hit{cursor:pointer}
+.planet-hit:hover circle.body{stroke:#fff;stroke-width:3}
+.planet-hit.selected circle.body{stroke:var(--accent);stroke-width:4}
+.orbit-path{fill:none;stroke:#3b4a9a;stroke-width:1.2}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit{animation:spin linear infinite;transform-origin:500px 320px}
+.paused .orbit,.paused .comet{animation-play-state:paused}
+html[data-motion="0"] .orbit,html[data-motion="0"] .comet{animation-play-state:paused}
+.planet-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+.planet-btns button{display:flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border:3px solid var(--line)}
+.planet-btns button.selected{border-color:var(--accent);background:#fff3d6}
+.planet-btns .dot{width:20px;height:20px;border-radius:50%}
+.pcard{display:grid;gap:14px;grid-template-columns:auto 1fr;align-items:center}
+.pcard .visual{width:110px;height:110px}
+.pcard .type{display:inline-block;padding:.15em .7em;border-radius:999px;font-weight:800;font-size:.9rem}
+.type.tellurique{background:#ffe0cc;color:#7a3300} .type.gazeuse{background:#d9f0ff;color:#003f66}
+.sizebar{display:flex;align-items:flex-end;gap:10px;overflow-x:auto;padding:10px 4px 6px}
+.sizebar .item{text-align:center;font-size:.85rem;font-weight:700;flex:none}
+.sizebar .ball{border-radius:50%;margin:0 auto 4px;box-shadow:inset -8px -8px 18px rgba(0,0,0,.25)}
+.flip{perspective:900px;min-height:150px}
+.flip .inner{position:relative;width:100%;height:150px;transition:transform .5s;transform-style:preserve-3d;cursor:pointer}
+.flip.on .inner{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-weight:700}
+.flip .front{background:var(--primary);color:#fff;font-size:1.3rem}
+.flip .back{background:#fff3d6;transform:rotateY(180deg);font-size:.95rem;font-weight:600}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+input[type=range]{flex:1;min-width:160px;height:40px;accent-color:var(--primary)}
+.readout{font-weight:800;font-size:1.15rem;background:#fff;padding:.4em .9em;border-radius:12px;border:2px solid var(--line)}
+.season-btn{cursor:pointer}
+.season-btn:hover text{fill:var(--accent)}
+.season-btn.selected .earth-ring{stroke:var(--accent);stroke-width:4}
+.wheel-wrap{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:center}
+.wheel{transition:transform 4s cubic-bezier(.15,.75,.15,1)}
+.fiche textarea,.fiche input{width:100%;font:inherit;padding:.6em;border:2px solid var(--line);border-radius:12px;background:#fffdf5;line-height:1.5}
+.fiche label{font-weight:800;display:block;margin:12px 0 4px}
+.timeline{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.timeline .ev{background:#fff;border-left:6px solid var(--accent);padding:12px;border-radius:0 12px 12px 0;box-shadow:var(--shadow)}
+.timeline .year{font-size:1.5rem;font-weight:900;color:var(--primary)}
+.phases{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));text-align:center;font-weight:700;font-size:.95rem}
+.phases .ph{background:var(--space);color:#fff;padding:10px 6px;border-radius:14px}
+.blank{display:inline-block;min-width:110px;border-bottom:4px solid var(--primary);background:#eef0fa;color:var(--primary);border-radius:8px 8px 0 0;padding:.05em .5em;margin:0 .15em;text-align:center;font-weight:800;min-height:1.6em;cursor:pointer;vertical-align:bottom}
+.blank.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.blank.good{background:var(--ok-bg);color:#0f5b30;border-color:var(--ok)} .blank.bad{background:var(--ko-bg);color:#7a1f1f;border-color:var(--ko)}
+.wordbank button{background:#fff;color:var(--ink);border:3px solid var(--primary);border-radius:999px;margin:5px}
+.wordbank button.used{opacity:.35}
+.badges{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.badge{background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:var(--shadow);border:3px solid var(--line);opacity:.45;filter:grayscale(1)}
+.badge.won{opacity:1;filter:none;border-color:var(--accent);animation:pop .5s}
+.badge .ico{font-size:2.6rem}
+@keyframes pop{0%{transform:scale(.7)}70%{transform:scale(1.1)}100%{transform:none}}
+.diplome{border:10px double var(--accent);padding:26px;text-align:center;background:#fffdf5;border-radius:12px}
+.diplome h2{font-size:2rem;color:var(--primary)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:999}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:800;transition:transform .3s;z-index:998;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:92vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;color:#fff;font-size:.9rem;padding:4px 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:50%;display:inline-block}
+.moon-view{display:grid;gap:14px;grid-template-columns:2fr 1fr;align-items:center}
+@media (max-width:700px){.moon-view{grid-template-columns:1fr}.pcard{grid-template-columns:1fr;text-align:center}.pcard .visual{margin:0 auto}}
+@media (prefers-reduced-motion:reduce){.orbit,.comet{animation-play-state:paused}}
+@media print{
+  header,.nav-btns,.no-print,.toast,#confetti{display:none !important}
+  body{background:#fff} main{max-width:none;padding:0}
+  .step{display:none} .step.active{display:block}
+  body.printing .step.active > *{display:none} body.printing .print-target{display:block !important}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<header>
+  <div class="bar">
+    <div class="title">🚀 La Terre dans le système solaire <span class="hint" style="color:#c9cff5">· 6ᵉ</span></div>
+    <button id="btn-home" title="Sommaire">🏠 Sommaire</button>
+    <button id="btn-size" title="Changer la taille du texte" aria-label="Taille du texte">Aa</button>
+    <button id="btn-spacing" title="Espacer les lettres (aide à la lecture)" aria-pressed="false">↔ Lettres</button>
+    <button id="btn-motion" title="Arrêter ou relancer les animations" aria-pressed="true">▶ Animations</button>
+    <button id="btn-sound" title="Sons" aria-pressed="false">🔔 Sons</button>
+    <button id="btn-stop-say" title="Arrêter la lecture à voix haute" hidden>⏹ Stop</button>
+  </div>
+  <div class="progress" aria-label="Progression">
+    <span>⭐</span><div class="track"><div class="fill" id="progress-fill"></div></div><span class="pct" id="progress-pct">0 %</span>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= ACCUEIL ================= -->
+<section class="step" id="s-home" data-title="Accueil" data-icon="🏠">
+  <div class="hero">
+    <svg class="stars" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><g fill="#fff"><circle cx="40" cy="30" r="1.5"/><circle cx="120" cy="90" r="1"/><circle cx="220" cy="40" r="2"/><circle cx="300" cy="140" r="1.2"/><circle cx="400" cy="60" r="1.8"/><circle cx="520" cy="120" r="1"/><circle cx="600" cy="30" r="2"/><circle cx="700" cy="90" r="1.4"/><circle cx="760" cy="200" r="1.8"/><circle cx="660" cy="250" r="1.1"/><circle cx="90" cy="230" r="1.6"/><circle cx="330" cy="260" r="1"/><circle cx="470" cy="220" r="1.5"/><circle cx="150" cy="170" r="1.2"/><circle cx="560" cy="270" r="1"/></g><g class="orbit-deco" fill="none" stroke="#5b6ac9" stroke-width="1" opacity=".5"><ellipse cx="780" cy="260" rx="150" ry="70"/><ellipse cx="780" cy="260" rx="230" ry="110"/><ellipse cx="780" cy="260" rx="320" ry="150"/></g><circle cx="780" cy="260" r="34" fill="#ffb703"/><circle cx="630" cy="260" r="8" fill="#5aa9ff"/><circle cx="560" cy="200" r="10" fill="#d9534f"/><circle cx="470" cy="150" r="14" fill="#d8a86b"/></svg>
+    <div style="position:relative">
+      <span class="badge-step">6ᵉ · Chapitre 1 · Sciences</span>
+      <h1>La Terre dans le système solaire</h1>
+      <p class="big">Bienvenue, astronaute ! 👩‍🚀👨‍🚀<br>Dans ce chapitre, tu vas découvrir le Soleil, les planètes, les mouvements de la Terre et les phases de la Lune.</p>
+      <div class="row">
+        <label for="student-name" style="font-weight:800">Ton prénom :</label>
+        <input id="student-name" type="text" placeholder="Écris ton prénom" autocomplete="off" maxlength="30">
+        <button class="accent" id="btn-start">C’est parti ! 🚀</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h2>Sommaire de la mission</h2><button class="say" data-say="#menu-intro">🔊 Écouter</button></div>
+    <p id="menu-intro">Clique sur une étape pour y aller. Tu peux les faire dans l’ordre, ou revenir en arrière quand tu veux. Une étoile apparaît quand une étape est finie.</p>
+    <div class="menu" id="menu"></div>
+  </div>
+
+  <div class="card tint no-print">
+    <h3>💡 Astuces</h3>
+    <ul>
+      <li>Le bouton <strong>🔊 Écouter</strong> lit le texte à voix haute.</li>
+      <li>Le bouton <strong>Aa</strong> en haut change la taille des lettres.</li>
+      <li>Le bouton <strong>↔ Lettres</strong> espace les lettres pour lire plus facilement.</li>
+      <li>Pour les activités, tu peux <strong>glisser</strong> les étiquettes avec le doigt ou la souris, ou <strong>taper</strong> une étiquette puis taper la case.</li>
+      <li>Ta progression est enregistrée sur cet appareil.</li>
+    </ul>
+    <button class="ghost small" id="btn-reset">🗑️ Tout recommencer à zéro</button>
+  </div>
+</section>
+
+<!-- ================= INTRODUCTION ================= -->
+<section class="step" id="s-intro" data-title="Introduction" data-icon="🔭">
+  <span class="badge-step">Étape 1</span>
+  <h2>Introduction : c’est quoi, le système solaire ?</h2>
+  <div class="card">
+    <div class="flex-title"><h3>🎯 Ce que tu vas apprendre</h3><button class="say" data-say="#intro-obj">🔊 Écouter</button></div>
+    <ul id="intro-obj">
+      <li>Reconnaître les <span class="keyword">objets</span> du système solaire : le Soleil, les planètes, les lunes, les astéroïdes et les comètes.</li>
+      <li>Savoir <span class="keyword">où est la Terre</span> et comment elle <span class="keyword">bouge</span>.</li>
+      <li>Comprendre pourquoi la Lune change de forme.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🤔 Quels objets connais-tu dans le ciel ?</h3><button class="say" data-say="#intro-q">🔊 Écouter</button></div>
+    <p id="intro-q">Tape sur chaque objet. Est-ce qu’il fait partie du système solaire, ou est-ce qu’il a été construit par les humains ?</p>
+    <div id="brainstorm" class="row" style="justify-content:center"></div>
+    <div id="brainstorm-result" class="card tint" hidden style="margin-top:14px"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>📍 Où se situe la Terre ?</h3><button class="say" data-say="#intro-where">🔊 Écouter</button></div>
+    <p id="intro-where">La Terre est la <span class="keyword">troisième planète</span> en partant du Soleil. Elle tourne autour du Soleil, comme les 7 autres planètes. Tu vas le voir sur le schéma de la leçon 1 !</p>
+    <svg viewBox="0 0 700 120" role="img" aria-label="Le Soleil à gauche, puis Mercure, Vénus, la Terre en troisième position, puis Mars">
+      <rect width="700" height="120" rx="14" fill="#0b1237"/>
+      <circle cx="40" cy="60" r="55" fill="#ffb703"/>
+      <text x="60" y="110" fill="#fff" font-size="13" font-weight="700">Soleil</text>
+      <circle cx="170" cy="60" r="7" fill="#b5b0a8"/><text x="170" y="95" fill="#fff" font-size="13" text-anchor="middle">1. Mercure</text>
+      <circle cx="270" cy="60" r="11" fill="#e6c27a"/><text x="270" y="95" fill="#fff" font-size="13" text-anchor="middle">2. Vénus</text>
+      <circle cx="380" cy="60" r="12" fill="#3b82f6"/><circle cx="376" cy="56" r="4" fill="#4ade80"/><circle cx="386" cy="64" r="3" fill="#4ade80"/><circle cx="380" cy="60" r="18" fill="none" stroke="#ff9f1c" stroke-width="3"/>
+      <text x="380" y="99" fill="#ffd166" font-size="14" font-weight="800" text-anchor="middle">3. TERRE ⭐</text>
+      <circle cx="490" cy="60" r="8" fill="#d9534f"/><text x="490" y="95" fill="#fff" font-size="13" text-anchor="middle">4. Mars</text>
+      <text x="600" y="66" fill="#c9cff5" font-size="22" text-anchor="middle">…</text>
+    </svg>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-home">← Sommaire</button><button data-go="s-lecon1">Leçon 1 →</button></div>
+</section>
+
+<!-- ================= LEÇON 1 ================= -->
+<section class="step" id="s-lecon1" data-title="Leçon 1 : le système solaire" data-icon="🪐">
+  <span class="badge-step">Étape 2 · Leçon 1</span>
+  <h2>Les éléments du système solaire</h2>
+
+  <div class="card">
+    <div class="flex-title"><h3>📖 Mon cours</h3><button class="say" data-say="#cours1">🔊 Écouter</button></div>
+    <div id="cours1">
+      <p>Le <span class="keyword">système solaire</span>, c’est le Soleil et tous les objets qui tournent autour de lui.</p>
+      <p>Au centre, il y a le <span class="keyword">Soleil</span>. C’est une <span class="keyword">étoile</span> : une énorme boule de gaz très chaude qui fait de la lumière.</p>
+      <p>Autour du Soleil tournent <span class="keyword">8 planètes</span>. Il y a deux sortes de planètes :</p>
+      <ul>
+        <li>Les <span class="keyword">planètes telluriques</span> : elles sont faites de <strong>roche</strong>. Ce sont Mercure, Vénus, la Terre et Mars. Elles sont petites et proches du Soleil.</li>
+        <li>Les <span class="keyword">planètes gazeuses</span> : elles sont faites surtout de <strong>gaz</strong>. Ce sont Jupiter, Saturne, Uranus et Neptune. Elles sont grosses et loin du Soleil.</li>
+      </ul>
+      <p>Certaines planètes ont des <span class="keyword">lunes</span> (des satellites naturels). Il y a aussi des <span class="keyword">astéroïdes</span>, comme des petits rochers, surtout entre Mars et Jupiter. Et des <span class="keyword">comètes</span>, faites de glace et de poussière : quand elles s’approchent du Soleil, elles ont une <strong>queue</strong> lumineuse.</p>
+      <p>Tous ces objets tournent autour du Soleil grâce à une force : la <span class="keyword">gravité</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🪐 Le système solaire animé</h3><div class="row"><button class="ghost small" id="btn-pause-orbits">⏸ Pause</button></div></div>
+    <p class="hint">Tape sur une planète (dans le schéma ou dans les boutons) pour découvrir sa fiche. Attention : les tailles et les distances ne sont pas à l’échelle !</p>
+    <div class="diagram" id="solar-diagram">
+      <svg id="solar-svg" viewBox="0 0 1000 640" role="img" aria-label="Schéma animé du système solaire : le Soleil au centre et les 8 planètes qui tournent autour, avec la ceinture d’astéroïdes et une comète"></svg>
+      <div class="legend"><span><i style="background:#ffb703"></i>Soleil</span><span><i style="background:#9aa0b8"></i>Ceinture d’astéroïdes</span><span><i style="background:#bfe9ff"></i>Comète</span></div>
+    </div>
+    <div class="planet-btns" id="planet-btns"></div>
+    <div id="planet-card" class="card tint" hidden style="margin-top:14px"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>📏 Qui est le plus gros ?</h3><button class="say" data-say="#size-text">🔊 Écouter</button></div>
+    <p id="size-text">Ici, les planètes sont dessinées à la bonne taille les unes par rapport aux autres. Jupiter est la plus grande planète. Le Soleil est encore bien plus gros : on pourrait y mettre plus d’un million de Terres !</p>
+    <div class="sizebar" id="sizebar"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🃏 Les mots importants</h3></div>
+    <p class="hint">Tape sur une carte pour la retourner.</p>
+    <div class="grid" id="flipcards"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🎯 Activité 1 : range les planètes dans l’ordre</h3><button class="say" data-say="#order-consigne">🔊 Écouter</button></div>
+    <p id="order-consigne">Place les 8 planètes dans l’ordre, de la plus proche du Soleil à la plus éloignée. Astuce pour retenir : <strong>« Me Voici Tout Mouillé, Je Suis Un Nuage »</strong> → Mercure, Vénus, Terre, Mars, Jupiter, Saturne, Uranus, Neptune.</p>
+    <div id="act-order"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🎯 Activité 2 : tellurique ou gazeuse ?</h3><button class="say" data-say="#sort-consigne">🔊 Écouter</button></div>
+    <p id="sort-consigne">Mets chaque planète dans la bonne boîte : planète tellurique (faite de roche) ou planète gazeuse (faite de gaz).</p>
+    <div id="act-sort"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>❓ Quiz de la leçon 1</h3></div>
+    <div id="quiz1" class="quiz"></div>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-intro">← Introduction</button><button data-go="s-expose">L’exposé →</button></div>
+</section>
+
+<!-- ================= EXPOSÉ ================= -->
+<section class="step" id="s-expose" data-title="Mon exposé" data-icon="🎤">
+  <span class="badge-step">Étape 3 · Exposé</span>
+  <h2>Mon exposé sur un objet du système solaire</h2>
+  <div class="card">
+    <div class="flex-title"><h3>📋 La consigne</h3><button class="say" data-say="#expose-consigne">🔊 Écouter</button></div>
+    <div id="expose-consigne">
+      <p>Tu vas <span class="keyword">tirer au sort</span> un objet du système solaire parmi 18 objets célèbres.</p>
+      <p>Ensuite, tu prépares un <span class="keyword">exposé de 3 minutes</span> sur cet objet. Tu dois dire : ses caractéristiques (taille, couleur, de quoi il est fait…), pourquoi il est important, et des faits étonnants.</p>
+      <p>Vérifie bien tes informations, et utilise des images pour rendre ton exposé plus captivant !</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🎡 Tire au sort ton objet céleste</h3>
+    <div class="wheel-wrap">
+      <div><svg id="wheel-svg" viewBox="0 0 320 320" role="img" aria-label="Roue de tirage au sort des 18 objets célestes"></svg></div>
+      <div>
+        <button class="accent big" id="btn-spin">🎡 Lancer la roue !</button>
+        <div id="wheel-result" class="card tint" hidden style="margin-top:14px"></div>
+      </div>
+    </div>
+    <details style="margin-top:14px"><summary style="cursor:pointer;font-weight:800">Voir la liste des 18 objets</summary><ol id="objects-list" style="columns:2;column-gap:30px"></ol></details>
+  </div>
+  <div class="card fiche">
+    <div class="flex-title"><h3>✍️ Ma fiche d’exposé</h3><button class="ghost small no-print" id="btn-print-fiche">🖨️ Imprimer ma fiche</button></div>
+    <p class="hint">Ce que tu écris ici est enregistré automatiquement sur cet appareil.</p>
+    <div id="fiche-print">
+      <label for="f-objet">Mon objet céleste</label><input id="f-objet" data-fiche="objet" placeholder="Exemple : Saturne">
+      <label for="f-carac">Ses caractéristiques (taille, couleur, de quoi il est fait…)</label><textarea id="f-carac" data-fiche="carac" rows="3"></textarea>
+      <label for="f-import">Pourquoi il est important</label><textarea id="f-import" data-fiche="import" rows="3"></textarea>
+      <label for="f-fait">Un fait étonnant</label><textarea id="f-fait" data-fiche="fait" rows="3"></textarea>
+      <label for="f-source">Où j’ai trouvé mes informations (livre, site…)</label><input id="f-source" data-fiche="source">
+    </div>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-lecon1">← Leçon 1</button><button data-go="s-lecon2">Leçon 2 →</button></div>
+</section>
+
+<!-- ================= LEÇON 2 ================= -->
+<section class="step" id="s-lecon2" data-title="Leçon 2 : la Terre bouge" data-icon="🌍">
+  <span class="badge-step">Étape 4 · Leçon 2</span>
+  <h2>La Terre, une planète en mouvement</h2>
+
+  <div class="card">
+    <div class="flex-title"><h3>📖 Mon cours</h3><button class="say" data-say="#cours2">🔊 Écouter</button></div>
+    <div id="cours2">
+      <p>La Terre fait <span class="keyword">deux mouvements</span> en même temps.</p>
+      <p><strong>1. La rotation.</strong> La Terre <span class="keyword">tourne sur elle-même</span>, comme une toupie, autour d’une ligne imaginaire : son <strong>axe</strong>. Un tour complet dure <span class="keyword">24 heures</span>. C’est ce qui fait <span class="keyword">le jour et la nuit</span> : le côté éclairé par le Soleil est en plein jour, l’autre côté est dans la nuit.</p>
+      <p><strong>2. La révolution.</strong> La Terre <span class="keyword">tourne autour du Soleil</span>. Son chemin s’appelle l’<strong>orbite</strong>. Un tour complet dure <span class="keyword">365 jours</span> : c’est <strong>une année</strong>.</p>
+      <p>L’axe de la Terre est <span class="keyword">penché</span> (incliné de 23,5°). À cause de ça, pendant une partie de l’année, le Nord est penché vers le Soleil : c’est l’été chez nous. Six mois plus tard, c’est l’hiver. C’est pour ça qu’il y a des <span class="keyword">saisons</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🌞🌙 La rotation : le jour et la nuit</h3><button class="say" data-say="#daynight-text">🔊 Écouter</button></div>
+    <p id="daynight-text">Bouge le curseur pour faire tourner la Terre. Le point rouge, c’est toi ! Regarde quand tu es dans la lumière (le jour) ou dans l’ombre (la nuit).</p>
+    <div class="diagram"><svg id="daynight-svg" viewBox="0 0 660 360" role="img" aria-label="La Terre vue de dessus, éclairée par le Soleil à gauche. Une moitié est dans la lumière, l’autre dans l’ombre."></svg></div>
+    <div class="controls">
+      <button class="ghost small" id="btn-play-day">▶ Faire tourner</button>
+      <label for="hour-slider" class="sr-only">Heure</label>
+      <input type="range" id="hour-slider" min="0" max="24" step="1" value="12">
+      <div class="readout" id="hour-readout"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🗓️ La révolution : l’année et les saisons</h3><button class="say" data-say="#season-text">🔊 Écouter</button></div>
+    <p id="season-text">Tape sur les 4 positions de la Terre pour voir la saison. Regarde bien : l’axe de la Terre (la ligne rouge) est toujours penché du même côté.</p>
+    <div class="diagram"><svg id="season-svg" viewBox="0 0 900 480" role="img" aria-label="La Terre tourne autour du Soleil en un an. Quatre positions : 21 mars, 21 juin, 23 septembre, 21 décembre."></svg></div>
+    <div class="controls"><button class="ghost small" id="btn-play-year">▶ Faire tourner la Terre autour du Soleil</button></div>
+    <div id="season-info" class="card tint" style="margin-top:12px">👆 Tape sur une position de la Terre.</div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🎯 Activité : rotation ou révolution ?</h3><button class="say" data-say="#match-consigne">🔊 Écouter</button></div>
+    <p id="match-consigne">Mets chaque étiquette dans la bonne boîte.</p>
+    <div id="act-match"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>❓ Quiz de la leçon 2</h3></div>
+    <div id="quiz2" class="quiz"></div>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-expose">← Exposé</button><button data-go="s-article">L’article →</button></div>
+</section>
+
+<!-- ================= ARTICLE ================= -->
+<section class="step" id="s-article" data-title="Article : 8 ou 9 planètes ?" data-icon="📰">
+  <span class="badge-step">Étape 5 · Un article</span>
+  <h2>Combien y a-t-il de planètes dans le système solaire ?</h2>
+  <div class="card">
+    <div class="flex-title"><h3>📰 L’histoire de Pluton</h3><button class="say" data-say="#article-text">🔊 Écouter</button></div>
+    <div id="article-text">
+      <p>En <strong>1930</strong>, un Américain, Clyde Tombaugh, découvre <span class="keyword">Pluton</span>. Pendant longtemps, on dit qu’il y a <strong>9 planètes</strong> : Mercure, Vénus, Terre, Mars, Jupiter, Saturne, Uranus, Neptune et Pluton.</p>
+      <p>Mais en <strong>2006</strong>, un autre Américain, Mike Brown, montre que Pluton est <strong>trop petite</strong> et qu’il y a beaucoup d’autres objets qui lui ressemblent près de Neptune. Pluton devient une <span class="keyword">planète naine</span>. On l’a surnommé le « tueur de Pluton » ! Il ne reste donc que <span class="keyword">8 vraies planètes</span>.</p>
+      <p>En <strong>2016</strong>, Mike Brown et Konstantin Batygin pensent, grâce à des calculs, qu’il existe peut-être une <span class="keyword">neuvième planète</span>, très loin du Soleil et dix fois plus lourde que la Terre. Mais <strong>personne ne l’a encore vue</strong> avec un télescope. Ce n’est pas prouvé !</p>
+      <p class="hint">D’après « 1 jour, 1 question » – lumni.fr</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🕰️ La frise</h3>
+    <div class="timeline">
+      <div class="ev"><div class="year">1930</div>Découverte de Pluton. On compte 9 planètes.</div>
+      <div class="ev"><div class="year">2006</div>Pluton devient une planète naine. Il reste 8 planètes.</div>
+      <div class="ev"><div class="year">2016</div>Des astronomes pensent qu’une « Planète Neuf » existe. Personne ne l’a vue.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="flex-title"><h3>❓ Vrai ou faux ?</h3></div>
+    <div id="quiz3" class="quiz"></div>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-lecon2">← Leçon 2</button><button data-go="s-lune">La Lune →</button></div>
+</section>
+
+<!-- ================= LUNE ================= -->
+<section class="step" id="s-lune" data-title="Étude de cas : la Lune" data-icon="🌙">
+  <span class="badge-step">Étape 6 · Étude de cas</span>
+  <h2>Les phases de la Lune</h2>
+  <div class="card">
+    <div class="flex-title"><h3>📖 Mon cours</h3><button class="say" data-say="#cours3">🔊 Écouter</button></div>
+    <div id="cours3">
+      <p>La <span class="keyword">Lune</span> tourne autour de la Terre. Elle ne fait pas de lumière : c’est le <strong>Soleil</strong> qui l’éclaire. Une moitié de la Lune est toujours éclairée.</p>
+      <p>Depuis la Terre, on ne voit pas toujours toute la partie éclairée. Selon la position de la Lune, on voit une partie plus ou moins grande : ce sont les <span class="keyword">phases de la Lune</span>.</p>
+      <p>Les phases changent presque tous les jours. Le cycle complet dure environ <span class="keyword">29,5 jours</span>, puis il recommence.</p>
+      <p>Astuce pour l’hémisphère Nord (comme en France) : le premier quartier ressemble à la lettre <strong>« p »</strong> (premier), le dernier quartier ressemble à la lettre <strong>« d »</strong> (dernier).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🌗 Fais tourner la Lune</h3><button class="say" data-say="#moon-text">🔊 Écouter</button></div>
+    <p id="moon-text">Bouge le curseur pour déplacer la Lune autour de la Terre. À droite, tu vois la Lune comme depuis la Terre. Le Soleil est à droite du schéma : il éclaire toujours le côté droit de la Lune.</p>
+    <div class="diagram">
+      <div class="moon-view">
+        <svg id="moon-orbit-svg" viewBox="0 0 640 420" role="img" aria-label="La Lune tourne autour de la Terre. Le Soleil éclaire depuis la droite."></svg>
+        <div class="center" style="color:#fff">
+          <div style="font-weight:800;margin-bottom:6px">Vue depuis la Terre</div>
+          <svg id="moon-face-svg" viewBox="0 0 200 200" style="width:160px;margin:0 auto" role="img" aria-label="La Lune telle qu’on la voit depuis la Terre"></svg>
+          <div id="moon-phase-name" style="font-weight:900;font-size:1.3rem;margin-top:8px;color:#ffd166"></div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="ghost small" id="btn-play-moon">▶ Faire tourner</button>
+      <label for="moon-slider" class="sr-only">Jour du cycle</label>
+      <input type="range" id="moon-slider" min="0" max="29" step="1" value="0">
+      <div class="readout" id="moon-readout"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>🌑🌒🌓🌕 Les 8 phases</h3><button class="say" data-say="#phases-text">🔊 Écouter</button></div>
+    <p id="phases-text">D’abord la lumière augmente (la Lune est croissante), puis elle diminue (la Lune est décroissante).</p>
+    <div class="phases" id="phases-gallery"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex-title"><h3>❓ Quelle est cette phase ?</h3></div>
+    <div id="quiz4" class="quiz"></div>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-article">← Article</button><button data-go="s-conclusion">Conclusion →</button></div>
+</section>
+
+<!-- ================= CONCLUSION ================= -->
+<section class="step" id="s-conclusion" data-title="Conclusion" data-icon="🏁">
+  <span class="badge-step">Étape 7 · Conclusion</span>
+  <h2>Ce que j’ai appris</h2>
+  <div class="card">
+    <div class="flex-title"><h3>✏️ Texte à trous</h3><button class="say" data-say="#trous-consigne">🔊 Écouter</button></div>
+    <p id="trous-consigne">Tape sur un trou, puis tape sur le bon mot. Quand tu as tout rempli, vérifie !</p>
+    <div id="act-trous"></div>
+  </div>
+  <div class="card">
+    <div class="flex-title"><h3>📖 Le résumé</h3><button class="say" data-say="#resume">🔊 Écouter</button></div>
+    <div id="resume">
+      <p>Le <strong>Soleil</strong> est une étoile. C’est lui qui donne de la lumière et de la chaleur à toutes les planètes qui tournent autour de lui.</p>
+      <p>La <strong>Terre</strong> fait deux mouvements : la <strong>rotation</strong> sur elle-même (24 heures, le jour et la nuit) et la <strong>révolution</strong> autour du Soleil (365 jours, l’année et les saisons).</p>
+      <p>Dans le système solaire, il y a aussi des <strong>astéroïdes</strong>, des <strong>comètes</strong> et des <strong>lunes</strong>. La Lune tourne autour de la Terre et nous montre ses <strong>phases</strong>.</p>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-lune">← La Lune</button><button data-go="s-bilan">Mon bilan →</button></div>
+</section>
+
+<!-- ================= BILAN ================= -->
+<section class="step" id="s-bilan" data-title="Mon bilan et mes badges" data-icon="🏆">
+  <span class="badge-step">Étape 8 · Bilan</span>
+  <h2>Mon bilan</h2>
+  <div class="card">
+    <h3>🏅 Mes badges</h3>
+    <div class="badges" id="badges"></div>
+  </div>
+  <div class="card">
+    <h3>📊 Mes scores aux quiz</h3>
+    <div id="scores"></div>
+  </div>
+  <div class="card">
+    <div class="flex-title"><h3>🎓 Mon diplôme</h3><button class="ghost small no-print" id="btn-print-diplome">🖨️ Imprimer</button></div>
+    <div class="diplome" id="diplome"></div>
+  </div>
+  <div class="card tint">
+    <h3>🔭 Pour aller plus loin…</h3>
+    <ul>
+      <li><a href="https://www.lumni.fr/jeu/le-systeme-solaire" target="_blank" rel="noopener">Jeu Lumni : le système solaire</a> (sur ordinateur ou tablette)</li>
+      <li><a href="https://www.lumni.fr/video/combien-y-a-t-il-de-planetes-dans-le-systeme-solaire" target="_blank" rel="noopener">Vidéo « 1 jour, 1 question » : combien y a-t-il de planètes ?</a></li>
+      <li>L’émission <strong>C’est pas sorcier – Le système solaire</strong></li>
+      <li>La BD <strong>« Les Foxonautes »</strong> de Lord Fox</li>
+    </ul>
+    <p class="hint">Prochain chapitre : <strong>Les conditions de la vie, une particularité de la Terre ?</strong><br>Page interactive réalisée d’après le livret enseignant de Jonathan ANDRÉ (SEGPA.org).</p>
+  </div>
+  <div class="nav-btns"><button class="ghost" data-go="s-conclusion">← Conclusion</button><button data-go="s-home">🏠 Sommaire</button></div>
+</section>
+
+</main>
+
+<script>
+/* =====================================================================
+   DONNÉES
+   ===================================================================== */
+const PLANETS = [
+  {id:"mercure", nom:"Mercure", type:"tellurique", color:"#b5b0a8", diam:0.38, orbit:60, r:5, period:5,
+   desc:"C’est la planète la plus proche du Soleil.", fun:"Elle est toute petite et couverte de cratères, comme la Lune."},
+  {id:"venus", nom:"Vénus", type:"tellurique", color:"#e6c27a", diam:0.95, orbit:90, r:8, period:9,
+   desc:"C’est la deuxième planète. On l’appelle souvent « l’étoile du berger ».", fun:"C’est la planète la plus chaude : plus de 450 °C !"},
+  {id:"terre", nom:"Terre", type:"tellurique", color:"#3b82f6", diam:1, orbit:120, r:9, period:13,
+   desc:"C’est notre planète, celle où nous vivons.", fun:"C’est la seule planète où l’on connaît la vie. Elle a un satellite naturel : la Lune."},
+  {id:"mars", nom:"Mars", type:"tellurique", color:"#d9534f", diam:0.53, orbit:150, r:6, period:20,
+   desc:"C’est la quatrième planète. On l’appelle « la planète rouge ».", fun:"Des robots envoyés par les humains roulent sur Mars !"},
+  {id:"jupiter", nom:"Jupiter", type:"gazeuse", color:"#d8a86b", diam:11.2, orbit:215, r:22, period:45,
+   desc:"C’est la plus grande planète du système solaire.", fun:"On pourrait mettre plus de 1 000 Terres à l’intérieur !"},
+  {id:"saturne", nom:"Saturne", type:"gazeuse", color:"#e8d59a", diam:9.45, orbit:250, r:18, period:65, rings:true,
+   desc:"C’est la deuxième plus grande planète. Elle est connue pour ses anneaux.", fun:"Ses anneaux sont faits de milliards de morceaux de glace et de roche."},
+  {id:"uranus", nom:"Uranus", type:"gazeuse", color:"#7fd6d6", diam:4, orbit:280, r:12, period:90,
+   desc:"C’est une planète gazeuse bleu-vert.", fun:"Elle tourne « couchée » sur le côté !"},
+  {id:"neptune", nom:"Neptune", type:"gazeuse", color:"#3b5bdb", diam:3.9, orbit:305, r:12, period:120,
+   desc:"C’est une planète gazeuse d’un bleu profond.", fun:"C’est la planète la plus éloignée du Soleil. Il y fait très, très froid."}
+];
+const ORDINAUX = ["1ʳᵉ","2ᵉ","3ᵉ","4ᵉ","5ᵉ","6ᵉ","7ᵉ","8ᵉ"];
+
+const OBJETS = [
+  ["Soleil","L’étoile au centre de notre système solaire.","☀️"],
+  ["Mercure","La planète la plus proche du Soleil.","🪨"],
+  ["Vénus","La deuxième planète, souvent appelée l’étoile du berger.","🌕"],
+  ["Terre","Notre planète natale.","🌍"],
+  ["Mars","La quatrième planète, souvent appelée la planète rouge.","🔴"],
+  ["Jupiter","La plus grande planète de notre système solaire.","🟠"],
+  ["Saturne","La deuxième plus grande planète, connue pour ses anneaux.","🪐"],
+  ["Uranus","Une planète gazeuse avec une teinte bleu-vert.","🩵"],
+  ["Neptune","Une autre planète gazeuse, connue pour sa couleur bleue profonde.","🔵"],
+  ["Pluton","Ce n’est plus une planète, mais une planète naine. Elle reste très célèbre.","❄️"],
+  ["La Lune","Le satellite naturel de la Terre.","🌙"],
+  ["Io","Un des principaux satellites de Jupiter, connu pour ses volcans.","🌋"],
+  ["Titan","Le plus grand satellite de Saturne, avec une atmosphère très épaisse.","🟤"],
+  ["Ganymède","Le plus grand satellite du système solaire, autour de Jupiter.","⚪"],
+  ["Les anneaux de Saturne","L’une des choses les plus belles du système solaire.","💍"],
+  ["La ceinture d’astéroïdes","Une zone entre Mars et Jupiter où tournent de nombreux astéroïdes.","🪨"],
+  ["La comète de Halley","Une comète très célèbre qui revient près de la Terre tous les 76 ans.","☄️"],
+  ["Cérès","Le plus grand objet de la ceinture d’astéroïdes. C’est une planète naine.","⚫"]
+];
+
+const BRAINSTORM = [
+  ["Le Soleil","☀️",true,"C’est l’étoile au centre du système solaire."],
+  ["La Lune","🌙",true,"C’est le satellite naturel de la Terre."],
+  ["Mars","🔴",true,"C’est la planète rouge, la 4ᵉ planète."],
+  ["Une comète","☄️",true,"Une boule de glace et de poussière avec une queue lumineuse."],
+  ["Un astéroïde","🪨",true,"Un gros rocher qui tourne autour du Soleil."],
+  ["Jupiter","🟠",true,"La plus grande planète."],
+  ["Une fusée","🚀",false,"Une fusée est construite par les humains. Ce n’est pas un objet naturel."],
+  ["La station spatiale","🛰️",false,"La station spatiale est construite par les humains. C’est un satellite artificiel."],
+  ["La Terre","🌍",true,"C’est notre planète, la 3ᵉ en partant du Soleil."]
+];
+
+const QUIZ1 = [
+  {q:"Autour de quel objet tournent les planètes du système solaire ?", choices:["La Terre","Mars","Le Soleil","Jupiter"], a:2,
+   ok:"Bravo ! Le Soleil est au centre du système solaire.", ko:"Non. C’est le Soleil, l’étoile au centre, autour de laquelle tournent toutes les planètes."},
+  {q:"Quelle est la différence entre une planète tellurique et une planète gazeuse ?", choices:["Les planètes telluriques sont plus grandes.","Les planètes gazeuses sont faites de roche.","Les planètes telluriques sont faites de gaz.","Les planètes telluriques sont faites de roche, les planètes gazeuses sont faites de gaz."], a:3,
+   ok:"Exact ! Tellurique = roche, gazeuse = gaz.", ko:"Non. Les planètes telluriques (Mercure, Vénus, Terre, Mars) sont en roche. Les planètes gazeuses (Jupiter, Saturne, Uranus, Neptune) sont en gaz."},
+  {q:"Où se trouvent la plupart des astéroïdes ?", choices:["Entre la Terre et Mars","Entre Mars et Jupiter","Entre Jupiter et Saturne","Autour de Neptune"], a:1,
+   ok:"Oui ! La ceinture d’astéroïdes est entre Mars et Jupiter.", ko:"Non. La ceinture d’astéroïdes se trouve entre Mars et Jupiter."},
+  {q:"Que se passe-t-il quand une comète s’approche du Soleil ?", choices:["Elle devient rocheuse.","Elle développe une queue lumineuse.","Elle se transforme en planète.","Elle disparaît complètement."], a:1,
+   ok:"Bravo ! La glace de la comète chauffe et forme une queue.", ko:"Non. Quand la comète s’approche du Soleil, sa glace chauffe et elle développe une queue lumineuse."}
+];
+const QUIZ2 = [
+  {q:"Quel mouvement de la Terre donne le jour et la nuit ?", choices:["La révolution","La rotation","L’orbite","L’inclinaison"], a:1,
+   ok:"Oui ! La rotation, c’est la Terre qui tourne sur elle-même.", ko:"Non. C’est la rotation : la Terre tourne sur elle-même, et le côté éclairé change."},
+  {q:"Combien de temps met la Terre pour faire un tour complet sur elle-même ?", choices:["365 jours","12 heures","24 heures","30 jours"], a:2,
+   ok:"Exact ! Un tour sur elle-même = 24 heures = 1 jour.", ko:"Non. Un tour complet sur elle-même dure 24 heures : c’est une journée."},
+  {q:"Pourquoi y a-t-il des saisons sur Terre ?", choices:["La distance entre la Terre et le Soleil change.","La Terre tourne sur elle-même.","L’axe de la Terre est penché.","La vitesse de la Terre change."], a:2,
+   ok:"Bravo ! C’est parce que l’axe de la Terre est incliné.", ko:"Non. C’est parce que l’axe de la Terre est penché (incliné). Pendant une partie de l’année, le Nord est penché vers le Soleil : c’est l’été."},
+  {q:"Quand c’est l’été dans l’hémisphère Nord, quel hémisphère est penché vers le Soleil ?", choices:["L’hémisphère Nord","L’hémisphère Sud","Les deux, pareil","Aucun des deux"], a:0,
+   ok:"Oui ! L’hémisphère Nord est penché vers le Soleil en été.", ko:"Non. En été chez nous, c’est l’hémisphère Nord qui est penché vers le Soleil."}
+];
+const QUIZ3 = [
+  {q:"Aujourd’hui, Pluton est une planète naine.", choices:["Vrai","Faux"], a:0, ok:"Vrai ! Depuis 2006, Pluton est une planète naine.", ko:"C’est vrai, en fait : depuis 2006, Pluton est classée comme planète naine."},
+  {q:"Il y a 9 vraies planètes dans le système solaire.", choices:["Vrai","Faux"], a:1, ok:"Faux ! Il y a 8 planètes.", ko:"C’est faux : il y a 8 planètes. Pluton n’en fait plus partie."},
+  {q:"La « Planète Neuf » a été vue avec un télescope.", choices:["Vrai","Faux"], a:1, ok:"Faux ! Personne ne l’a encore vue. C’est seulement un calcul.", ko:"C’est faux : personne ne l’a encore observée. Son existence n’est pas prouvée."},
+  {q:"Pluton a été découverte en 1930.", choices:["Vrai","Faux"], a:0, ok:"Vrai ! Par Clyde Tombaugh, en 1930.", ko:"C’est vrai : Pluton a été découverte en 1930 par Clyde Tombaugh."}
+];
+const PHASES = [
+  {p:0, nom:"Nouvelle Lune", desc:"On ne voit pas la Lune : elle est entre la Terre et le Soleil."},
+  {p:1/8, nom:"Premier croissant", desc:"On voit un petit croissant, comme une parenthèse qui se ferme « ) »."},
+  {p:2/8, nom:"Premier quartier", desc:"La moitié droite est éclairée. Elle ressemble à un « p »."},
+  {p:3/8, nom:"Lune gibbeuse croissante", desc:"Presque toute la Lune est éclairée, la lumière augmente encore."},
+  {p:4/8, nom:"Pleine Lune", desc:"Toute la Lune est éclairée : elle est à l’opposé du Soleil."},
+  {p:5/8, nom:"Lune gibbeuse décroissante", desc:"La Lune commence à perdre sa lumière petit à petit."},
+  {p:6/8, nom:"Dernier quartier", desc:"La moitié gauche est éclairée. Elle ressemble à un « d »."},
+  {p:7/8, nom:"Dernier croissant", desc:"Un petit croissant, comme une parenthèse qui s’ouvre « ( »."}
+];
+const TROUS = {
+  text:"Le [Soleil] est une [étoile] au centre du système solaire. Autour de lui tournent [huit] planètes. La Terre tourne sur elle-même : c’est la [rotation], qui dure [24 heures] et donne le jour et la nuit. La Terre fait aussi le tour du Soleil : c’est la [révolution], qui dure [365 jours] et donne les [saisons]. La Lune tourne autour de la [Terre] : depuis chez nous, on voit ses [phases].",
+  extra:["neuf","12 heures","Lune","gravité"]
+};
+const BADGES = [
+  {id:"explorateur", ico:"🪐", nom:"Explorateur des planètes", need:["l1_order","l1_sort","l1_quiz"]},
+  {id:"presentateur", ico:"🎤", nom:"Présentateur", need:["expose_tirage","expose_fiche"]},
+  {id:"voyageur", ico:"🌍", nom:"Voyageur de la Terre", need:["l2_match","l2_quiz"]},
+  {id:"journaliste", ico:"📰", nom:"Journaliste de l’espace", need:["article_quiz"]},
+  {id:"gardien", ico:"🌙", nom:"Gardien de la Lune", need:["lune_quiz"]},
+  {id:"champion", ico:"🏆", nom:"Champion du système solaire", need:"all"}
+];
+const ALL_TASKS = ["intro_brainstorm","l1_planets","l1_order","l1_sort","l1_quiz","expose_tirage","expose_fiche","l2_daynight","l2_seasons","l2_match","l2_quiz","article_quiz","lune_explore","lune_quiz","conclu_trous"];
+const STEP_TASKS = {
+  "s-intro":["intro_brainstorm"],
+  "s-lecon1":["l1_planets","l1_order","l1_sort","l1_quiz"],
+  "s-expose":["expose_tirage","expose_fiche"],
+  "s-lecon2":["l2_daynight","l2_seasons","l2_match","l2_quiz"],
+  "s-article":["article_quiz"],
+  "s-lune":["lune_explore","lune_quiz"],
+  "s-conclusion":["conclu_trous"]
+};
+
+/* =====================================================================
+   ÉTAT (sauvegardé dans le navigateur)
+   ===================================================================== */
+const KEY = "segpa-6e-ch1-systeme-solaire";
+let state = {name:"", done:{}, quiz:{}, fiche:{}, explored:{}, seasons:{}, tirage:null, settings:{size:1, spacing:0, motion:1, sound:0}};
+try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && typeof s==="object"){ state = Object.assign(state, s); state.settings = Object.assign({size:1,spacing:0,motion:1,sound:0}, s.settings||{}); } }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function markDone(task, silent){
+  if(state.done[task]) return;
+  state.done[task] = true; save(); updateProgress();
+  const before = wonBadges(true);
+  if(!silent) toast("⭐ Étape validée !");
+  const after = wonBadges();
+  after.filter(b=>!before.includes(b)).forEach(b=>{ const bd = BADGES.find(x=>x.id===b); setTimeout(()=>{ toast("🏅 Nouveau badge : "+bd.ico+" "+bd.nom); confetti(); }, 700); });
+}
+let prevBadges = [];
+function wonBadges(usePrev){
+  if(usePrev) return prevBadges;
+  const won = BADGES.filter(b => b.need==="all" ? ALL_TASKS.every(t=>state.done[t]) : b.need.every(t=>state.done[t])).map(b=>b.id);
+  prevBadges = won; return won;
+}
+wonBadges();
+
+/* =====================================================================
+   OUTILS
+   ===================================================================== */
+const $ = (s, r=document)=>r.querySelector(s);
+const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+const NS = "http://www.w3.org/2000/svg";
+function svgEl(tag, attrs={}, parent){ const el=document.createElementNS(NS, tag); for(const k in attrs) el.setAttribute(k, attrs[k]); if(parent) parent.appendChild(el); return el; }
+function el(tag, attrs={}, html){ const e=document.createElement(tag); for(const k in attrs){ if(k==="class") e.className=attrs[k]; else e.setAttribute(k, attrs[k]); } if(html!==undefined) e.innerHTML=html; return e; }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+let toastTimer;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"), 2600); }
+
+/* Sons (Web Audio, désactivés par défaut) */
+let audioCtx;
+function beep(good){
+  if(!state.settings.sound) return;
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const notes = good ? [523, 659, 784] : [220, 180];
+    notes.forEach((f,i)=>{ const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type="sine"; o.frequency.value=f; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const t=audioCtx.currentTime+i*0.12; o.start(t); g.gain.exponentialRampToValueAtTime(0.25, t+0.02); g.gain.exponentialRampToValueAtTime(0.0001, t+0.11); o.stop(t+0.12); });
+  }catch(e){}
+}
+
+/* Lecture à voix haute */
+let currentSayBtn=null;
+function speak(text, btn){
+  if(!("speechSynthesis" in window)){ toast("La lecture à voix haute n’est pas disponible sur cet appareil."); return; }
+  const synth = window.speechSynthesis;
+  if(currentSayBtn===btn && synth.speaking){ stopSpeak(); return; }
+  stopSpeak();
+  const u = new SpeechSynthesisUtterance(text.replace(/\s+/g," ").trim());
+  u.lang = "fr-FR"; u.rate = 0.9;
+  const v = synth.getVoices().find(v=>/^fr/i.test(v.lang)); if(v) u.voice = v;
+  u.onend = u.onerror = ()=>{ if(btn) btn.setAttribute("aria-pressed","false"); currentSayBtn=null; $("#btn-stop-say").hidden=true; };
+  currentSayBtn=btn; if(btn) btn.setAttribute("aria-pressed","true"); $("#btn-stop-say").hidden=false;
+  synth.speak(u);
+}
+function stopSpeak(){ if("speechSynthesis" in window) window.speechSynthesis.cancel(); if(currentSayBtn) currentSayBtn.setAttribute("aria-pressed","false"); currentSayBtn=null; $("#btn-stop-say").hidden=true; }
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".say"); if(!b) return;
+  const target = $(b.dataset.say); if(target) speak(target.textContent, b);
+});
+$("#btn-stop-say").addEventListener("click", stopSpeak);
+
+/* Confettis */
+function confetti(){
+  if(!state.settings.motion) return;
+  const c=$("#confetti"), ctx=c.getContext("2d"); c.width=innerWidth; c.height=innerHeight;
+  const parts = Array.from({length:120}, ()=>({x:Math.random()*c.width, y:-20-Math.random()*200, vx:(Math.random()-.5)*3, vy:2+Math.random()*4, s:6+Math.random()*8, col:["#ff9f1c","#3b4fd6","#1f9d55","#ffd166","#d64545","#7fd6d6"][Math.floor(Math.random()*6)], rot:Math.random()*6}));
+  let frames=0;
+  (function draw(){ ctx.clearRect(0,0,c.width,c.height); parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.rot+=0.1; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.col; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6); ctx.restore(); }); if(++frames<160) requestAnimationFrame(draw); else ctx.clearRect(0,0,c.width,c.height); })();
+}
+
+/* Glisser-déposer accessible : taper une étiquette puis une case, ou glisser */
+function setupDnD(root, onDrop){
+  let selected=null, drag=null;
+  const clearSel=()=>{ if(selected) selected.classList.remove("selected"); selected=null; $$(".drop", root).forEach(d=>d.classList.remove("can")); };
+  root.addEventListener("click", e=>{
+    if(drag && drag.moved){ return; }
+    const chip=e.target.closest(".chip"), drop=e.target.closest(".drop");
+    if(chip && root.contains(chip)){
+      if(selected===chip){ clearSel(); return; }
+      clearSel(); selected=chip; chip.classList.add("selected"); $$(".drop", root).forEach(d=>{ if(d!==chip.parentElement) d.classList.add("can"); });
+      return;
+    }
+    if(drop && selected){ const s=selected; clearSel(); onDrop(s, drop); }
+  });
+  root.addEventListener("pointerdown", e=>{
+    const chip=e.target.closest(".chip"); if(!chip || e.button>0) return;
+    drag={chip, x:e.clientX, y:e.clientY, moved:false, ghost:null, over:null};
+    chip.setPointerCapture(e.pointerId);
+  });
+  root.addEventListener("pointermove", e=>{
+    if(!drag) return;
+    const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+    if(!drag.moved){ if(Math.hypot(dx,dy)<8) return; drag.moved=true; clearSel(); drag.ghost=drag.chip.cloneNode(true); drag.ghost.classList.add("ghost"); document.body.appendChild(drag.ghost); drag.chip.style.opacity=".35"; }
+    const g=drag.ghost; g.style.left=(e.clientX-g.offsetWidth/2)+"px"; g.style.top=(e.clientY-g.offsetHeight/2)+"px";
+    g.style.display="none"; const under=document.elementFromPoint(e.clientX,e.clientY); g.style.display="";
+    const over = under && under.closest(".drop"); if(over && !root.contains(over)) return;
+    if(drag.over && drag.over!==over) drag.over.classList.remove("over");
+    if(over){ over.classList.add("over"); } drag.over=over||null;
+  });
+  const end = e=>{
+    if(!drag) return;
+    const d=drag;
+    if(d.moved){ d.ghost.remove(); d.chip.style.opacity=""; if(d.over){ d.over.classList.remove("over"); if(d.over!==d.chip.parentElement) onDrop(d.chip, d.over); } setTimeout(()=>{ drag=null; },0); }
+    else drag=null;
+  };
+  root.addEventListener("pointerup", end); root.addEventListener("pointercancel", end);
+}
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
+const STEPS = $$(".step").map(s=>s.id);
+function showStep(id){
+  if(!STEPS.includes(id)) id="s-home";
+  stopSpeak();
+  $$(".step").forEach(s=>s.classList.toggle("active", s.id===id));
+  location.hash = id; window.scrollTo({top:0, behavior:"smooth"});
+  if(id==="s-home") renderMenu(); if(id==="s-bilan") renderBilan();
+}
+document.addEventListener("click", e=>{ const b=e.target.closest("[data-go]"); if(b) showStep(b.dataset.go); });
+$("#btn-home").addEventListener("click", ()=>showStep("s-home"));
+$("#btn-start").addEventListener("click", ()=>showStep("s-intro"));
+window.addEventListener("hashchange", ()=>{ const id=location.hash.slice(1); if(STEPS.includes(id) && !$("#"+id).classList.contains("active")) showStep(id); });
+
+function renderMenu(){
+  const m=$("#menu"); m.innerHTML="";
+  STEPS.filter(s=>s!=="s-home").forEach(id=>{
+    const sec=$("#"+id); const tasks=STEP_TASKS[id]||[]; const done = tasks.length && tasks.every(t=>state.done[t]);
+    const b=el("button", {"data-go":id}, `<span class="ico">${sec.dataset.icon}</span><span>${esc(sec.dataset.title)}</span><span class="done">${done?"⭐":(tasks.some(t=>state.done[t])?"🔸":"")}</span>`);
+    m.appendChild(b);
+  });
+}
+function updateProgress(){
+  const n = ALL_TASKS.filter(t=>state.done[t]).length; const pct=Math.round(100*n/ALL_TASKS.length);
+  $("#progress-fill").style.width=pct+"%"; $("#progress-pct").textContent=pct+" %";
+}
+
+/* Réglages */
+function applySettings(){
+  const s=state.settings; document.documentElement.dataset.size=s.size; document.documentElement.dataset.spacing=s.spacing; document.documentElement.dataset.motion=s.motion;
+  $("#btn-spacing").setAttribute("aria-pressed", !!s.spacing); $("#btn-motion").setAttribute("aria-pressed", !!s.motion); $("#btn-sound").setAttribute("aria-pressed", !!s.sound);
+  $("#btn-motion").textContent = s.motion ? "▶ Animations" : "⏸ Animations";
+}
+$("#btn-size").addEventListener("click", ()=>{ state.settings.size = state.settings.size%3+1; save(); applySettings(); toast("Taille du texte : "+["petite","moyenne","grande"][state.settings.size-1]); });
+$("#btn-spacing").addEventListener("click", ()=>{ state.settings.spacing = state.settings.spacing?0:1; save(); applySettings(); });
+$("#btn-motion").addEventListener("click", ()=>{ state.settings.motion = state.settings.motion?0:1; save(); applySettings(); });
+$("#btn-sound").addEventListener("click", ()=>{ state.settings.sound = state.settings.sound?0:1; save(); applySettings(); beep(true); });
+$("#btn-reset").addEventListener("click", ()=>{ if(confirm("Tout effacer et recommencer à zéro ?")){ localStorage.removeItem(KEY); location.hash=""; location.reload(); } });
+$("#student-name").value = state.name||"";
+$("#student-name").addEventListener("input", e=>{ state.name=e.target.value.trim(); save(); });
+
+/* =====================================================================
+   INTRODUCTION : remue-méninges
+   ===================================================================== */
+(function(){
+  const box=$("#brainstorm"), res=$("#brainstorm-result"); let seen=0;
+  BRAINSTORM.forEach(([nom,ico,natural,expl])=>{
+    const b=el("button",{class:"ghost"},`${ico} ${esc(nom)}`);
+    b.addEventListener("click", ()=>{
+      res.hidden=false; res.className="card "+(natural?"ok":"ko");
+      res.innerHTML = `<strong>${ico} ${esc(nom)} :</strong> ${natural?"✅ Oui, c’est un objet du système solaire.":"🛠️ Non, c’est construit par les humains."} ${esc(expl)}`;
+      if(!b.dataset.seen){ b.dataset.seen=1; b.style.background=natural?"var(--ok-bg)":"var(--ko-bg)"; b.style.color=natural?"#0f5b30":"#7a1f1f"; seen++; }
+      if(seen>=6) markDone("intro_brainstorm");
+    });
+    box.appendChild(b);
+  });
+})();
+
+/* =====================================================================
+   LEÇON 1 : système solaire animé
+   ===================================================================== */
+const CX=500, CY=320;
+function planetVisual(p, parent, cx, cy, r){
+  const g=svgEl("g",{},parent);
+  if(p.rings){ svgEl("ellipse",{cx,cy,rx:r*1.9,ry:r*0.55,fill:"none",stroke:"#d9c28a",'stroke-width':r*0.35,opacity:.9},g); }
+  const body=svgEl("circle",{class:"body",cx,cy,r,fill:p.color},g);
+  if(p.id==="terre"){ svgEl("circle",{cx:cx-r*0.35,cy:cy-r*0.3,r:r*0.35,fill:"#4ade80"},g); svgEl("circle",{cx:cx+r*0.35,cy:cy+r*0.3,r:r*0.28,fill:"#4ade80"},g); }
+  if(p.id==="jupiter"){ svgEl("ellipse",{cx:cx+r*0.3,cy:cy+r*0.3,rx:r*0.3,ry:r*0.18,fill:"#c0623f",opacity:.8},g); svgEl("rect",{x:cx-r,y:cy-r*0.25,width:2*r,height:r*0.12,fill:"#b07a4a",opacity:.6},g); }
+  svgEl("circle",{cx:cx-r*0.3,cy:cy-r*0.3,r:r*0.35,fill:"#fff",opacity:.18},g);
+  return g;
+}
+function buildSolar(){
+  const svg=$("#solar-svg");
+  const defs=svgEl("defs",{},svg);
+  const grad=svgEl("radialGradient",{id:"sunGlow"},defs); svgEl("stop",{offset:"0%","stop-color":"#fff4b0"},grad); svgEl("stop",{offset:"60%","stop-color":"#ffb703"},grad); svgEl("stop",{offset:"100%","stop-color":"#ff7b00"},grad);
+  // étoiles de fond
+  let seed=7; const rnd=()=>{ seed=(seed*9301+49297)%233280; return seed/233280; };
+  for(let i=0;i<90;i++) svgEl("circle",{cx:rnd()*1000,cy:rnd()*640,r:rnd()*1.6+.3,fill:"#fff",opacity:rnd()*.7+.3},svg);
+  // orbites
+  PLANETS.forEach(p=>svgEl("circle",{class:"orbit-path",cx:CX,cy:CY,r:p.orbit},svg));
+  // ceinture d'astéroïdes
+  const belt=svgEl("g",{class:"orbit",style:"animation-duration:150s"},svg);
+  for(let i=0;i<140;i++){ const a=rnd()*Math.PI*2, r=172+rnd()*22; svgEl("circle",{cx:CX+r*Math.cos(a),cy:CY+r*Math.sin(a),r:rnd()*1.5+.6,fill:"#9aa0b8"},belt); }
+  svgEl("text",{x:CX+205,y:CY-160,fill:"#9aa0b8","font-size":"13"},svg).textContent="ceinture d’astéroïdes";
+  // Soleil
+  svgEl("circle",{cx:CX,cy:CY,r:46,fill:"url(#sunGlow)",opacity:.35},svg);
+  svgEl("circle",{cx:CX,cy:CY,r:32,fill:"url(#sunGlow)"},svg);
+  svgEl("text",{x:CX,y:CY+52,fill:"#ffd166","font-size":"14","font-weight":"800","text-anchor":"middle"},svg).textContent="Soleil";
+  // comète
+  const cpath=svgEl("path",{id:"cometPath",d:"M 60 560 C 300 640, 560 300, 470 300 C 400 300, 200 480, 60 560 Z",fill:"none",stroke:"#3b4a9a","stroke-dasharray":"4 6","stroke-width":1},svg);
+  const comet=svgEl("g",{class:"comet"},svg);
+  svgEl("path",{d:"M0 0 L-70 -8 L-90 0 L-70 8 Z",fill:"#bfe9ff",opacity:.35},comet);
+  svgEl("circle",{cx:0,cy:0,r:5,fill:"#eaf6ff"},comet);
+  const am=svgEl("animateMotion",{dur:"38s",repeatCount:"indefinite",rotate:"auto"},comet); svgEl("mpath",{href:"#cometPath"},am);
+  svgEl("text",{x:120,y:600,fill:"#bfe9ff","font-size":"13"},svg).textContent="comète";
+  // planètes
+  PLANETS.forEach((p,i)=>{
+    const orbit=svgEl("g",{class:"orbit",style:`animation-duration:${p.period}s;animation-delay:-${(i*3.7)%p.period}s`},svg);
+    const hit=svgEl("g",{class:"planet-hit",tabindex:"0",role:"button","aria-label":p.nom,"data-planet":p.id},orbit);
+    svgEl("circle",{cx:CX+p.orbit,cy:CY,r:p.r+12,fill:"transparent"},hit);
+    planetVisual(p,hit,CX+p.orbit,CY,p.r);
+    if(p.id==="terre"){ const moonG=svgEl("g",{class:"orbit",style:"animation-duration:3s;transform-origin:"+(CX+p.orbit)+"px "+CY+"px"},hit); svgEl("circle",{cx:CX+p.orbit+16,cy:CY,r:3,fill:"#ddd"},moonG); }
+    hit.addEventListener("click", ()=>selectPlanet(p.id));
+    hit.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); selectPlanet(p.id);} });
+  });
+  // boutons
+  const bb=$("#planet-btns");
+  PLANETS.forEach(p=>{ const b=el("button",{"data-planet":p.id},`<span class="dot" style="background:${p.color}"></span>${esc(p.nom)}`); b.addEventListener("click",()=>selectPlanet(p.id)); bb.appendChild(b); });
+  $("#btn-pause-orbits").addEventListener("click", e=>{ const d=$("#solar-diagram"); d.classList.toggle("paused"); e.target.textContent = d.classList.contains("paused") ? "▶ Reprendre" : "⏸ Pause"; });
+}
+function selectPlanet(id){
+  const p=PLANETS.find(x=>x.id===id); const i=PLANETS.indexOf(p);
+  $$("[data-planet]").forEach(n=>n.classList.toggle("selected", n.dataset.planet===id));
+  const card=$("#planet-card"); card.hidden=false;
+  card.innerHTML = `<div class="pcard"><svg class="visual" viewBox="0 0 120 120" aria-hidden="true"></svg><div>
+    <h3 style="margin:0">${esc(p.nom)} <span class="hint">· ${ORDINAUX[i]} planète en partant du Soleil</span></h3>
+    <span class="type ${p.type}">Planète ${p.type} (${p.type==="tellurique"?"en roche":"en gaz"})</span>
+    <p style="margin:.6em 0 .3em" id="pdesc">${esc(p.desc)}</p>
+    <p style="margin:0">🤩 <strong>Le savais-tu ?</strong> ${esc(p.fun)}</p>
+    <button class="say small" data-say="#planet-card" style="margin-top:8px">🔊 Écouter</button></div></div>`;
+  planetVisual(p, $("svg",card), 60, 60, p.rings?28:42);
+  state.explored[id]=true; save();
+  if(Object.keys(state.explored).length>=5) markDone("l1_planets");
+  card.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+function buildSizebar(){
+  const bar=$("#sizebar"); const k=12.5;
+  const sun=el("div",{class:"item"},`<div class="ball" style="width:150px;height:150px;background:radial-gradient(circle at 30% 30%,#fff4b0,#ffb703 60%,#ff7b00);box-shadow:0 0 30px #ffb703"></div>Soleil<br><span class="hint">(en vrai, 10 fois plus gros que Jupiter !)</span>`);
+  bar.appendChild(sun);
+  PLANETS.forEach(p=>{ const d=Math.max(6, p.diam*k); bar.appendChild(el("div",{class:"item"},`<div class="ball" style="width:${d}px;height:${d}px;background:${p.color}"></div>${esc(p.nom)}`)); });
+}
+function buildFlipcards(){
+  const cards=[["Étoile","Une énorme boule de gaz très chaude qui fait sa propre lumière. Exemple : le Soleil."],["Planète","Une grosse boule qui tourne autour d’une étoile. Elle ne fait pas de lumière. Exemple : la Terre."],["Satellite naturel","Un objet qui tourne autour d’une planète. Exemple : la Lune."],["Astéroïde","Un rocher qui tourne autour du Soleil. La plupart sont entre Mars et Jupiter."],["Comète","Une boule de glace et de poussière. Près du Soleil, elle a une queue lumineuse."],["Gravité","La force qui attire les objets les uns vers les autres. Elle fait tourner les planètes autour du Soleil."]];
+  const box=$("#flipcards");
+  cards.forEach(([f,b])=>{ const c=el("div",{class:"flip",tabindex:"0",role:"button","aria-label":f+" : tape pour voir la définition"},`<div class="inner"><div class="face front">${esc(f)}</div><div class="face back">${esc(b)}</div></div>`); const t=()=>c.classList.toggle("on"); c.addEventListener("click",t); c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();t();}}); box.appendChild(c); });
+}
+
+/* =====================================================================
+   ACTIVITÉS génériques
+   ===================================================================== */
+function chipHTML(item){ return `<span class="chip" data-id="${esc(item.id)}" data-group="${esc(item.group||"")}">${item.color?`<span class="dot" style="background:${item.color}"></span>`:""}${item.ico?item.ico+" ":""}${esc(item.label)}</span>`; }
+
+/* Ranger dans l'ordre */
+function renderOrder(container, task, items, correct, slotLabels){
+  const root=$(container);
+  root.innerHTML = `<div class="drop bank" data-target="bank">${shuffle(items).map(chipHTML).join("")}</div>
+    <p class="center hint" style="margin:10px 0">⬇️ Place les étiquettes dans les cases ⬇️</p>
+    <div class="slots">${correct.map((_,i)=>`<div class="slot"><div class="num">${slotLabels?slotLabels[i]:"N° "+(i+1)}</div><div class="drop" data-target="${i}"></div></div>`).join("")}</div>
+    <div class="row no-print" style="margin-top:14px;justify-content:center"><button class="ok" data-check>✅ Vérifier</button><button class="ghost" data-retry>🔄 Recommencer</button></div><div data-msg></div>`;
+  const bank=$(".bank",root);
+  setupDnD(root, (chip, drop)=>{
+    if(drop===bank){ bank.appendChild(chip); return; }
+    const existing=$(".chip",drop); if(existing) bank.appendChild(existing);
+    drop.appendChild(chip); drop.classList.remove("good","bad");
+  });
+  $("[data-check]",root).addEventListener("click", ()=>{
+    let ok=0; const slots=$$(".slot .drop",root);
+    slots.forEach((d,i)=>{ const c=$(".chip",d); const good = c && c.dataset.id===correct[i]; d.classList.toggle("good",!!good); d.classList.toggle("bad",!good); if(good) ok++; });
+    const msg=$("[data-msg]",root);
+    if(ok===correct.length){ msg.innerHTML=`<div class="card ok" style="margin-top:12px">🎉 Bravo ! Tout est dans le bon ordre !</div>`; beep(true); confetti(); markDone(task); }
+    else { msg.innerHTML=`<div class="card ko" style="margin-top:12px">${ok} bonne(s) réponse(s) sur ${correct.length}. Les cases rouges sont à corriger : remets l’étiquette dans la banque et essaie encore.</div>`; beep(false); }
+  });
+  $("[data-retry]",root).addEventListener("click", ()=>renderOrder(container, task, items, correct, slotLabels));
+}
+
+/* Trier dans des boîtes */
+function renderSort(container, task, items, groups){
+  const root=$(container);
+  root.innerHTML = `<div class="drop bank" data-target="bank">${shuffle(items).map(chipHTML).join("")}</div>
+    <p class="center hint" style="margin:10px 0">⬇️ Mets chaque étiquette dans la bonne boîte ⬇️</p>
+    <div class="bins">${groups.map(g=>`<div class="bin"><h3>${g.ico||""} ${esc(g.label)}</h3><div class="drop" data-target="${esc(g.id)}" style="min-height:120px;background:${g.bg||"#f7f8ff"}"></div></div>`).join("")}</div>
+    <div class="row no-print" style="margin-top:14px;justify-content:center"><button class="ok" data-check>✅ Vérifier</button><button class="ghost" data-retry>🔄 Recommencer</button></div><div data-msg></div>`;
+  setupDnD(root, (chip, drop)=>{ drop.appendChild(chip); chip.style.borderColor=""; });
+  $("[data-check]",root).addEventListener("click", ()=>{
+    let ok=0, placed=0;
+    $$(".bin .drop .chip",root).forEach(c=>{ placed++; const good=c.dataset.group===c.parentElement.dataset.target; c.style.borderColor = good?"var(--ok)":"var(--ko)"; if(good) ok++; });
+    const msg=$("[data-msg]",root);
+    if(placed<items.length){ msg.innerHTML=`<div class="card ko" style="margin-top:12px">Il reste des étiquettes dans la banque !</div>`; return; }
+    if(ok===items.length){ msg.innerHTML=`<div class="card ok" style="margin-top:12px">🎉 Bravo ! Tout est bien trié !</div>`; beep(true); confetti(); markDone(task); }
+    else { msg.innerHTML=`<div class="card ko" style="margin-top:12px">${ok} sur ${items.length}. Les étiquettes en rouge ne sont pas dans la bonne boîte. Déplace-les et vérifie encore.</div>`; beep(false); }
+  });
+  $("[data-retry]",root).addEventListener("click", ()=>renderSort(container, task, items, groups));
+}
+
+/* Quiz */
+function renderQuiz(container, key, questions, task){
+  const root=$(container); let i=0, score=0, answered=false;
+  const best = state.quiz[key];
+  function question(){
+    answered=false; const q=questions[i];
+    root.innerHTML = `<div class="counter">Question ${i+1} / ${questions.length}${best!==undefined?` · Meilleur score : ${best}/${questions.length}`:""}</div>
+      <div class="q">${esc(q.q)} <button class="say small" data-say="${container} .q">🔊</button></div>
+      <div class="choices">${q.choices.map((c,k)=>`<button data-k="${k}"><span class="letter">${"ABCD"[k]}</span><span>${esc(c)}</span></button>`).join("")}</div><div data-fb></div>`;
+    $$(".choices button",root).forEach(b=>b.addEventListener("click", ()=>{
+      if(answered) return; answered=true; const k=+b.dataset.k; const good=k===q.a;
+      $$(".choices button",root).forEach(x=>{ x.disabled = true; if(+x.dataset.k===q.a) x.classList.add("good"); });
+      if(!good) b.classList.add("bad"); else score++;
+      beep(good);
+      $("[data-fb]",root).innerHTML = `<div class="feedback ${good?"good":"bad"}">${good?"✅ ":"❌ "}${esc(good?q.ok:q.ko)}</div><div class="row" style="margin-top:12px;justify-content:flex-end"><button data-next>${i<questions.length-1?"Question suivante →":"Voir mon résultat 🏁"}</button></div>`;
+      $("[data-next]",root).addEventListener("click", ()=>{ i++; if(i<questions.length) question(); else result(); });
+    }));
+  }
+  function result(){
+    const n=questions.length; const stars="⭐".repeat(score)+"☆".repeat(n-score);
+    state.quiz[key]=Math.max(state.quiz[key]||0, score); save();
+    const perfect=score===n;
+    root.innerHTML = `<div class="card ${score>=n/2?"ok":"ko"} center"><div class="stars">${stars}</div><h3>${score} / ${n}</h3><p>${perfect?"🎉 Parfait ! Tu as tout bon !":score>=n/2?"👍 Bien joué ! Tu peux réessayer pour avoir tout bon.":"💪 Relis la leçon et réessaie, tu vas y arriver !"}</p><button data-again>🔄 Refaire le quiz</button></div>`;
+    $("[data-again]",root).addEventListener("click", ()=>{ i=0; score=0; question(); });
+    if(perfect){ confetti(); markDone(task); } else if(score>=n/2 && !state.done[task]) { /* on attend le sans-faute pour valider */ }
+  }
+  question();
+}
+
+/* =====================================================================
+   EXPOSÉ : roue
+   ===================================================================== */
+function buildWheel(){
+  const svg=$("#wheel-svg"); const n=OBJETS.length; const cx=160, cy=160, R=150;
+  const g=svgEl("g",{class:"wheel",id:"wheel-g",style:"transform-origin:160px 160px"},svg);
+  const cols=["#3b4fd6","#ff9f1c","#1f9d55","#d64545","#7fd6d6","#8b5cf6"];
+  OBJETS.forEach((o,i)=>{
+    const a0=(i/n)*2*Math.PI - Math.PI/2, a1=((i+1)/n)*2*Math.PI - Math.PI/2;
+    const x0=cx+R*Math.cos(a0), y0=cy+R*Math.sin(a0), x1=cx+R*Math.cos(a1), y1=cy+R*Math.sin(a1);
+    svgEl("path",{d:`M${cx},${cy} L${x0},${y0} A${R},${R} 0 0 1 ${x1},${y1} Z`,fill:cols[i%cols.length],stroke:"#fff","stroke-width":1.5},g);
+    const am=(a0+a1)/2; const t=svgEl("text",{x:cx+R*0.68*Math.cos(am),y:cy+R*0.68*Math.sin(am),"font-size":"15","text-anchor":"middle","dominant-baseline":"middle"},g); t.textContent=o[2];
+  });
+  svgEl("circle",{cx,cy,r:22,fill:"#fff",stroke:"#1c2340","stroke-width":3},svg);
+  svgEl("path",{d:`M${cx-14},4 L${cx+14},4 L${cx},30 Z`,fill:"#1c2340"},svg);
+  const list=$("#objects-list"); OBJETS.forEach(o=>list.appendChild(el("li",{},`<strong>${esc(o[0])}</strong> : ${esc(o[1])}`)));
+  let spinning=false, turns=0;
+  function showResult(i, animate){
+    const o=OBJETS[i]; const r=$("#wheel-result"); r.hidden=false;
+    r.innerHTML=`<div style="font-size:3rem">${o[2]}</div><h3>${esc(o[0])}</h3><p>${esc(o[1])}</p><p class="hint">Tu peux relancer la roue si ton enseignant·e est d’accord.</p><button class="small ghost" data-use>✍️ Mettre dans ma fiche</button>`;
+    $("[data-use]",r).addEventListener("click", ()=>{ const inp=$("#f-objet"); inp.value=o[0]; inp.dispatchEvent(new Event("input")); inp.scrollIntoView({behavior:"smooth"}); });
+    if(animate){ confetti(); markDone("expose_tirage"); }
+  }
+  $("#btn-spin").addEventListener("click", ()=>{
+    if(spinning) return; spinning=true;
+    const i=Math.floor(Math.random()*n); turns+=5;
+    const target = turns*360 - (i+0.5)*(360/n);
+    const wheel=$("#wheel-g"); wheel.style.transition = state.settings.motion ? "transform 4s cubic-bezier(.15,.75,.15,1)" : "none";
+    wheel.style.transform=`rotate(${target}deg)`;
+    state.tirage=i; save();
+    setTimeout(()=>{ spinning=false; showResult(i,true); }, state.settings.motion?4100:100);
+  });
+  if(state.tirage!==null && state.tirage!==undefined && OBJETS[state.tirage]){ const i=state.tirage; $("#wheel-g").style.transition="none"; $("#wheel-g").style.transform=`rotate(${-(i+0.5)*(360/n)}deg)`; showResult(i,false); }
+  // fiche
+  $$("[data-fiche]").forEach(f=>{ f.value=state.fiche[f.dataset.fiche]||""; f.addEventListener("input", ()=>{ state.fiche[f.dataset.fiche]=f.value; save(); const filled=["objet","carac","import","fait"].every(k=>(state.fiche[k]||"").trim().length>2); if(filled) markDone("expose_fiche"); }); });
+  $("#btn-print-fiche").addEventListener("click", ()=>printEl($("#fiche-print").parentElement));
+}
+function printEl(node){ document.body.classList.add("printing"); node.classList.add("print-target"); const clean=()=>{ document.body.classList.remove("printing"); node.classList.remove("print-target"); window.removeEventListener("afterprint",clean); }; window.addEventListener("afterprint", clean); window.print(); setTimeout(clean, 2000); }
+
+/* =====================================================================
+   LEÇON 2 : jour/nuit
+   ===================================================================== */
+let dayTimer=null;
+function buildDayNight(){
+  const svg=$("#daynight-svg"); const ex=380, ey=180, R=110;
+  const defs=svgEl("defs",{},svg); const g1=svgEl("radialGradient",{id:"sun2"},defs); svgEl("stop",{offset:"0%","stop-color":"#fff4b0"},g1); svgEl("stop",{offset:"100%","stop-color":"#ff9f1c"},g1);
+  // rayons
+  for(let i=-3;i<=3;i++){ svgEl("line",{x1:130,y1:180+i*40,x2:ex-R-6,y2:180+i*40,stroke:"#ffd166","stroke-width":3,"stroke-dasharray":"12 8",opacity:.7},svg); }
+  svgEl("circle",{cx:60,cy:180,r:60,fill:"url(#sun2)"},svg);
+  svgEl("text",{x:60,y:270,fill:"#ffd166","font-size":"18","font-weight":"800","text-anchor":"middle"},svg).textContent="Soleil";
+  svgEl("circle",{cx:ex,cy:ey,r:R,fill:"#3b82f6"},svg);
+  const globe=svgEl("g",{id:"globe"},svg);
+  // continents symboliques
+  [[ex-40,ey-40,38,26],[ex+35,ey-20,30,22],[ex-10,ey+45,44,24],[ex+60,ey+40,18,14],[ex-75,ey+10,16,20]].forEach(([x,y,rx,ry])=>svgEl("ellipse",{cx:x,cy:y,rx,ry,fill:"#4ade80"},globe));
+  svgEl("circle",{cx:ex-R,cy:ey,r:9,fill:"#ff3b3b",stroke:"#fff","stroke-width":3},globe);
+  svgEl("text",{x:ex-R,y:ey-16,fill:"#fff","font-size":"15","font-weight":"800","text-anchor":"middle",stroke:"#0b1237","stroke-width":3,"paint-order":"stroke"},globe).textContent="Moi";
+  // ombre (moitié droite)
+  svgEl("path",{d:`M${ex},${ey-R} A${R},${R} 0 0 1 ${ex},${ey+R} Z`,fill:"#050a2a",opacity:.72},svg);
+  svgEl("text",{x:ex-55,y:ey-R-18,fill:"#ffd166","font-size":"16","font-weight":"800","text-anchor":"middle"},svg).textContent="☀️ JOUR";
+  svgEl("text",{x:ex+55,y:ey-R-18,fill:"#c9cff5","font-size":"16","font-weight":"800","text-anchor":"middle"},svg).textContent="🌙 NUIT";
+  svgEl("path",{d:`M${ex+R+30},${ey-40} A60,60 0 0 1 ${ex+R+30},${ey+40}`,fill:"none",stroke:"#fff","stroke-width":3,"marker-end":"url(#arrow)"},svg);
+  const m=svgEl("marker",{id:"arrow",viewBox:"0 0 10 10",refX:"6",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto"},defs); svgEl("path",{d:"M0,0 L10,5 L0,10 Z",fill:"#fff"},m);
+  svgEl("text",{x:ex+R+30,y:ey+70,fill:"#fff","font-size":"14","font-weight":"700"},svg).textContent="1 tour = 24 h";
+  const slider=$("#hour-slider"), out=$("#hour-readout");
+  let touched=0;
+  function update(){
+    const h=+slider.value; const angle=(h-12)*15;
+    globe.setAttribute("transform",`rotate(${angle} ${ex} ${ey})`);
+    let txt; if(h===6) txt="🌅 6 h : le Soleil se lève"; else if(h===18) txt="🌇 18 h : le Soleil se couche"; else if(h===12) txt="☀️ 12 h : il fait jour (midi)"; else if(h===0||h===24) txt="🌙 "+h+" h : il fait nuit (minuit)"; else if(h>6&&h<18) txt="☀️ "+h+" h : il fait jour"; else txt="🌙 "+h+" h : il fait nuit";
+    out.textContent=txt;
+  }
+  slider.addEventListener("input", ()=>{ update(); if(++touched>=6) markDone("l2_daynight"); });
+  $("#btn-play-day").addEventListener("click", e=>{
+    if(dayTimer){ clearInterval(dayTimer); dayTimer=null; e.target.textContent="▶ Faire tourner"; return; }
+    e.target.textContent="⏸ Arrêter"; touched+=6;
+    dayTimer=setInterval(()=>{ slider.value=(+slider.value+1)%25; update(); }, 350); markDone("l2_daynight");
+  });
+  update();
+}
+
+/* =====================================================================
+   LEÇON 2 : saisons
+   ===================================================================== */
+let yearAnim=null;
+function buildSeasons(){
+  const svg=$("#season-svg"); const sx=450, sy=240, rx=310, ry=150;
+  const defs=svgEl("defs",{},svg); const g1=svgEl("radialGradient",{id:"sun3"},defs); svgEl("stop",{offset:"0%","stop-color":"#fff4b0"},g1); svgEl("stop",{offset:"100%","stop-color":"#ff9f1c"},g1);
+  svgEl("ellipse",{cx:sx,cy:sy,rx,ry,fill:"none",stroke:"#5b6ac9","stroke-width":2,"stroke-dasharray":"6 6"},svg);
+  svgEl("circle",{cx:sx,cy:sy,r:34,fill:"url(#sun3)"},svg);
+  svgEl("text",{x:sx,y:sy+54,fill:"#ffd166","font-size":"14","font-weight":"800","text-anchor":"middle"},svg).textContent="Soleil";
+  const POS=[
+    {id:"juin", x:sx-rx, y:sy, date:"21 juin", lx:-40, ly:-62, saison:"☀️ Été dans l’hémisphère Nord (en France), hiver dans l’hémisphère Sud. Le Nord est penché vers le Soleil : les jours sont longs et il fait chaud."},
+    {id:"sept", x:sx, y:sy+ry, date:"23 septembre", lx:0, ly:58, saison:"🍂 Automne dans l’hémisphère Nord, printemps dans l’hémisphère Sud. Les deux hémisphères reçoivent autant de lumière."},
+    {id:"dec", x:sx+rx, y:sy, date:"21 décembre", lx:40, ly:-62, saison:"❄️ Hiver dans l’hémisphère Nord (en France), été dans l’hémisphère Sud. Le Nord est penché loin du Soleil : les jours sont courts et il fait froid."},
+    {id:"mars", x:sx, y:sy-ry, date:"21 mars", lx:0, ly:-50, saison:"🌸 Printemps dans l’hémisphère Nord, automne dans l’hémisphère Sud. Les deux hémisphères reçoivent autant de lumière."}
+  ];
+  function earthIcon(parent, x, y, r, sunAngle){
+    const g=svgEl("g",{transform:`translate(${x} ${y})`},parent);
+    svgEl("circle",{class:"earth-ring",cx:0,cy:0,r:r+5,fill:"none",stroke:"transparent"},g);
+    svgEl("circle",{cx:0,cy:0,r,fill:"#3b82f6"},g);
+    svgEl("ellipse",{cx:-r*0.3,cy:-r*0.3,rx:r*0.35,ry:r*0.25,fill:"#4ade80"},g);
+    svgEl("ellipse",{cx:r*0.3,cy:r*0.35,rx:r*0.3,ry:r*0.22,fill:"#4ade80"},g);
+    const shade=svgEl("path",{d:`M0,${-r} A${r},${r} 0 0 0 0,${r} Z`,fill:"#050a2a",opacity:.7},g);
+    const tilt=svgEl("g",{transform:"rotate(23.5)"},g);
+    svgEl("line",{x1:0,y1:-r-12,x2:0,y2:r+12,stroke:"#ff3b3b","stroke-width":3},tilt);
+    svgEl("line",{x1:-r,y1:0,x2:r,y2:0,stroke:"#fff","stroke-width":1.5,"stroke-dasharray":"3 3"},tilt);
+    svgEl("text",{x:0,y:-r-16,fill:"#ff8080","font-size":"13","font-weight":"800","text-anchor":"middle"},tilt).textContent="N";
+    svgEl("text",{x:0,y:r+26,fill:"#ff8080","font-size":"13","font-weight":"800","text-anchor":"middle"},tilt).textContent="S";
+    g._shade=shade; setSun(g, sunAngle); return g;
+  }
+  function setSun(g, ang){ g._shade.setAttribute("transform",`rotate(${ang})`); }
+  const sunAngle=(x,y)=>Math.atan2(sy-y, sx-x)*180/Math.PI;
+  POS.forEach(p=>{
+    const btn=svgEl("g",{class:"season-btn",tabindex:"0",role:"button","aria-label":p.date,"data-season":p.id},svg);
+    earthIcon(btn,p.x,p.y,24,sunAngle(p.x,p.y));
+    svgEl("text",{x:p.x+p.lx,y:p.y+p.ly,fill:"#fff","font-size":"16","font-weight":"800","text-anchor":"middle"},btn).textContent=p.date;
+    const pick=()=>{ $$(".season-btn",svg).forEach(b=>b.classList.toggle("selected",b===btn)); $("#season-info").innerHTML=`<strong>${esc(p.date)}</strong> — ${esc(p.saison)}`; state.seasons[p.id]=true; save(); if(Object.keys(state.seasons).length>=4) markDone("l2_seasons"); };
+    btn.addEventListener("click",pick); btn.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+  });
+  svgEl("text",{x:16,y:24,fill:"#c9cff5","font-size":"14","font-weight":"700"},svg).textContent="1 tour = 365 jours = 1 année";
+  svgEl("text",{x:16,y:44,fill:"#ff8080","font-size":"13"},svg).textContent="— ligne rouge : l’axe de la Terre (toujours penché du même côté)";
+  // Terre mobile
+  const mover=earthIcon(svg, sx-rx, sy, 14, 0); mover.setAttribute("visibility","hidden"); mover.style.pointerEvents="none"; let t=Math.PI;
+  $("#btn-play-year").addEventListener("click", e=>{
+    if(yearAnim){ cancelAnimationFrame(yearAnim); yearAnim=null; mover.setAttribute("visibility","hidden"); e.target.textContent="▶ Faire tourner la Terre autour du Soleil"; return; }
+    e.target.textContent="⏸ Arrêter"; mover.setAttribute("visibility","visible"); let last=performance.now();
+    const step=now=>{ const dt=(now-last)/1000; last=now; t+= dt*0.6; const x=sx+rx*Math.cos(t), y=sy+ry*Math.sin(t); mover.setAttribute("transform",`translate(${x} ${y})`); setSun(mover, sunAngle(x,y)); yearAnim=requestAnimationFrame(step); };
+    yearAnim=requestAnimationFrame(step);
+  });
+}
+
+/* =====================================================================
+   LUNE
+   ===================================================================== */
+function moonPath(p, cx, cy, R){
+  p=((p%1)+1)%1; const k=Math.cos(2*Math.PI*p); const rx=Math.abs(k)*R;
+  if(p<0.5){ const sweep = k>0 ? 0 : 1; return `M${cx},${cy-R} A${R},${R} 0 0 1 ${cx},${cy+R} A${rx.toFixed(2)},${R} 0 0 ${sweep} ${cx},${cy-R} Z`; }
+  const sweep = k<0 ? 0 : 1; return `M${cx},${cy-R} A${R},${R} 0 0 0 ${cx},${cy+R} A${rx.toFixed(2)},${R} 0 0 ${sweep} ${cx},${cy-R} Z`;
+}
+function moonDisc(svg, cx, cy, R, p){
+  svg.innerHTML="";
+  svgEl("circle",{cx,cy,r:R,fill:"#2a2f4a"},svg);
+  svgEl("path",{d:moonPath(p,cx,cy,R),fill:"#f1f0e6"},svg);
+  [[cx-R*0.3,cy-R*0.2,R*0.13],[cx+R*0.25,cy+R*0.3,R*0.1],[cx+R*0.1,cy-R*0.45,R*0.08],[cx-R*0.15,cy+R*0.45,R*0.07]].forEach(([x,y,r])=>svgEl("circle",{cx:x,cy:y,r,fill:"#000",opacity:.12},svg));
+}
+function phaseFor(p){ const i=Math.round(((p%1)+1)%1*8)%8; return PHASES[i]; }
+let moonTimer=null;
+function buildMoon(){
+  const svg=$("#moon-orbit-svg"); const ex=300, ey=210, Ro=150;
+  // rayons du Soleil (à droite)
+  for(let i=-2;i<=2;i++){ svgEl("line",{x1:630,y1:ey+i*60,x2:540,y2:ey+i*60,stroke:"#ffd166","stroke-width":4,"marker-end":"url(#arrow2)"},svg); }
+  const defs=svgEl("defs",{},svg); const m=svgEl("marker",{id:"arrow2",viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto"},defs); svgEl("path",{d:"M0,0 L10,5 L0,10 Z",fill:"#ffd166"},m);
+  svgEl("text",{x:600,y:ey-140,fill:"#ffd166","font-size":"15","font-weight":"800","text-anchor":"middle"},svg).textContent="☀️ Soleil";
+  svgEl("circle",{cx:ex,cy:ey,r:Ro,fill:"none",stroke:"#5b6ac9","stroke-width":2,"stroke-dasharray":"5 6"},svg);
+  // 8 lunes fantômes
+  PHASES.forEach(ph=>{ const a=ph.p*2*Math.PI; const x=ex+Ro*Math.cos(a), y=ey-Ro*Math.sin(a); const g=svgEl("g",{opacity:.35},svg); svgEl("circle",{cx:x,cy:y,r:10,fill:"#2a2f4a"},g); svgEl("path",{d:`M${x},${y-10} A10,10 0 0 1 ${x},${y+10} Z`,fill:"#f1f0e6"},g); });
+  // Terre
+  svgEl("circle",{cx:ex,cy:ey,r:34,fill:"#3b82f6"},svg);
+  svgEl("ellipse",{cx:ex-10,cy:ey-10,rx:12,ry:8,fill:"#4ade80"},svg); svgEl("ellipse",{cx:ex+10,cy:ey+12,rx:9,ry:7,fill:"#4ade80"},svg);
+  svgEl("path",{d:`M${ex},${ey-34} A34,34 0 0 0 ${ex},${ey+34} Z`,fill:"#050a2a",opacity:.7},svg);
+  svgEl("text",{x:ex,y:ey+56,fill:"#fff","font-size":"14","font-weight":"800","text-anchor":"middle"},svg).textContent="Terre";
+  // Lune mobile
+  const moon=svgEl("g",{},svg); svgEl("circle",{cx:0,cy:0,r:18,fill:"#2a2f4a",stroke:"#ffd166","stroke-width":3},moon); svgEl("path",{d:"M0,-18 A18,18 0 0 1 0,18 Z",fill:"#f1f0e6"},moon);
+  const label=svgEl("text",{x:0,y:-28,fill:"#ffd166","font-size":"14","font-weight":"800","text-anchor":"middle"},moon); label.textContent="Lune";
+  const slider=$("#moon-slider"), out=$("#moon-readout"), face=$("#moon-face-svg"), name=$("#moon-phase-name");
+  let touched=0;
+  function update(){
+    const d=+slider.value; const p=d/29.5; const a=p*2*Math.PI; const x=ex+Ro*Math.cos(a), y=ey-Ro*Math.sin(a);
+    moon.setAttribute("transform",`translate(${x} ${y})`);
+    moonDisc(face,100,100,80,p); const ph=phaseFor(p); name.textContent=ph.nom;
+    out.textContent=`Jour ${d} / 29`;
+  }
+  slider.addEventListener("input", ()=>{ update(); if(++touched>=8) markDone("lune_explore"); });
+  $("#btn-play-moon").addEventListener("click", e=>{
+    if(moonTimer){ clearInterval(moonTimer); moonTimer=null; e.target.textContent="▶ Faire tourner"; return; }
+    e.target.textContent="⏸ Arrêter"; moonTimer=setInterval(()=>{ slider.value=(+slider.value+1)%30; update(); }, 400); markDone("lune_explore");
+  });
+  update();
+  // galerie
+  const gal=$("#phases-gallery");
+  PHASES.forEach((ph,i)=>{ const d=el("div",{class:"ph"}); const s=svgEl("svg",{viewBox:"0 0 100 100",style:"width:70px;margin:0 auto 6px"}); moonDisc(s,50,50,42,ph.p); d.appendChild(s); d.insertAdjacentHTML("beforeend", `<div>${i+1}. ${esc(ph.nom)}</div><div style="font-weight:500;font-size:.85rem;opacity:.9;margin-top:4px">${esc(ph.desc)}</div>`); gal.appendChild(d); });
+}
+function buildMoonQuiz(){
+  // quiz : reconnaître 4 phases parmi les 8, choix multiples
+  const picks=shuffle([0,2,4,6,1,7]).slice(0,5);
+  const questions=picks.map(i=>{
+    const ph=PHASES[i]; const others=shuffle(PHASES.filter((_,k)=>k!==i)).slice(0,3); const choices=shuffle([ph,...others]);
+    return {q:"Quelle est cette phase de la Lune ?", svgP:ph.p, choices:choices.map(c=>c.nom), a:choices.indexOf(ph), ok:ph.desc, ko:"C’est « "+ph.nom+" ». "+ph.desc};
+  });
+  const root=$("#quiz4"); let i=0, score=0, answered=false;
+  function question(){
+    answered=false; const q=questions[i];
+    root.innerHTML=`<div class="counter">Question ${i+1} / ${questions.length}${state.quiz.lune!==undefined?` · Meilleur score : ${state.quiz.lune}/${questions.length}`:""}</div>
+      <div class="q">${esc(q.q)}</div><div class="diagram" style="width:170px;margin:0 auto 14px;padding:14px"><svg viewBox="0 0 100 100" id="qmoon"></svg></div>
+      <div class="choices">${q.choices.map((c,k)=>`<button data-k="${k}"><span class="letter">${"ABCD"[k]}</span><span>${esc(c)}</span></button>`).join("")}</div><div data-fb></div>`;
+    moonDisc($("#qmoon"),50,50,44,q.svgP);
+    $$(".choices button",root).forEach(b=>b.addEventListener("click", ()=>{
+      if(answered) return; answered=true; const k=+b.dataset.k; const good=k===q.a;
+      $$(".choices button",root).forEach(x=>{ x.disabled=true; if(+x.dataset.k===q.a) x.classList.add("good"); });
+      if(!good) b.classList.add("bad"); else score++; beep(good);
+      $("[data-fb]",root).innerHTML=`<div class="feedback ${good?"good":"bad"}">${good?"✅ ":"❌ "}${esc(good?q.ok:q.ko)}</div><div class="row" style="margin-top:12px;justify-content:flex-end"><button data-next>${i<questions.length-1?"Question suivante →":"Voir mon résultat 🏁"}</button></div>`;
+      $("[data-next]",root).addEventListener("click", ()=>{ i++; if(i<questions.length) question(); else result(); });
+    }));
+  }
+  function result(){
+    const n=questions.length; state.quiz.lune=Math.max(state.quiz.lune||0,score); save(); const perfect=score===n;
+    root.innerHTML=`<div class="card ${score>=n/2?"ok":"ko"} center"><div class="stars">${"⭐".repeat(score)+"☆".repeat(n-score)}</div><h3>${score} / ${n}</h3><p>${perfect?"🎉 Parfait ! Tu reconnais toutes les phases !":score>=n/2?"👍 Bien joué ! Réessaie pour avoir tout bon.":"💪 Regarde encore la galerie des phases et réessaie !"}</p><button data-again>🔄 Refaire le quiz</button></div>`;
+    $("[data-again]",root).addEventListener("click", buildMoonQuiz);
+    if(perfect){ confetti(); markDone("lune_quiz"); }
+  }
+  question();
+}
+
+/* =====================================================================
+   CONCLUSION : texte à trous
+   ===================================================================== */
+function buildTrous(){
+  const root=$("#act-trous"); const answers=[];
+  const html = TROUS.text.replace(/\[([^\]]+)\]/g, (m,w)=>{ answers.push(w); return `<span class="blank" data-i="${answers.length-1}" tabindex="0" role="button" aria-label="trou ${answers.length}">…</span>`; });
+  const words=shuffle(answers.concat(TROUS.extra));
+  root.innerHTML=`<p class="big" style="line-height:2.3" id="trous-text">${html}</p><div class="wordbank center">${words.map(w=>`<button data-w="${esc(w)}">${esc(w)}</button>`).join("")}</div>
+    <div class="row no-print" style="margin-top:14px;justify-content:center"><button class="ok" data-check>✅ Vérifier</button><button class="ghost" data-retry>🔄 Recommencer</button></div><div data-msg></div>`;
+  let sel=null; const blanks=$$(".blank",root);
+  const select=b=>{ blanks.forEach(x=>x.classList.remove("selected")); sel=b; if(b) b.classList.add("selected"); };
+  blanks.forEach(b=>{ const f=()=>{ if(b.dataset.w){ const wb=$(`.wordbank button[data-w="${CSS.escape(b.dataset.w)}"]`,root); if(wb) wb.classList.remove("used"); delete b.dataset.w; b.textContent="…"; b.classList.remove("good","bad"); } select(b); }; b.addEventListener("click",f); b.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();f();}}); });
+  $$(".wordbank button",root).forEach(wb=>wb.addEventListener("click", ()=>{
+    if(wb.classList.contains("used")) return;
+    let target=sel || blanks.find(b=>!b.dataset.w); if(!target) return;
+    target.dataset.w=wb.dataset.w; target.textContent=wb.dataset.w; target.classList.remove("good","bad"); wb.classList.add("used");
+    select(blanks.find(b=>!b.dataset.w)||null);
+  }));
+  $("[data-check]",root).addEventListener("click", ()=>{
+    let ok=0; blanks.forEach((b,i)=>{ const good=b.dataset.w===answers[i]; b.classList.toggle("good",good); b.classList.toggle("bad",!good); if(good) ok++; });
+    const msg=$("[data-msg]",root);
+    if(ok===answers.length){ msg.innerHTML=`<div class="card ok" style="margin-top:12px">🎉 Bravo ! Le texte est complet et juste !</div>`; beep(true); confetti(); markDone("conclu_trous"); }
+    else { msg.innerHTML=`<div class="card ko" style="margin-top:12px">${ok} bon(s) mot(s) sur ${answers.length}. Tape sur un trou rouge pour changer le mot.</div>`; beep(false); }
+  });
+  $("[data-retry]",root).addEventListener("click", buildTrous);
+}
+
+/* =====================================================================
+   BILAN
+   ===================================================================== */
+function renderBilan(){
+  const won=wonBadges();
+  $("#badges").innerHTML = BADGES.map(b=>`<div class="badge ${won.includes(b.id)?"won":""}"><div class="ico">${b.ico}</div><div>${esc(b.nom)}</div><div class="hint">${won.includes(b.id)?"Gagné !":"À gagner"}</div></div>`).join("");
+  const rows=[["Quiz leçon 1 : le système solaire","q1",4],["Quiz leçon 2 : la Terre bouge","q2",4],["Vrai ou faux : les planètes","q3",4],["Quiz : les phases de la Lune","lune",5]];
+  $("#scores").innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:1rem">${rows.map(([n,k,t])=>`<tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 4px">${n}</td><td style="padding:8px 4px;text-align:right;font-weight:800">${state.quiz[k]!==undefined?state.quiz[k]+" / "+t:"—"}</td></tr>`).join("")}</table>`;
+  const n=ALL_TASKS.filter(t=>state.done[t]).length;
+  $("#diplome").innerHTML = `<div style="font-size:2.5rem">🚀🪐🌍🌙</div><h2>Diplôme d’explorateur du système solaire</h2><p class="big">Décerné à <strong>${esc(state.name||"…………………")}</strong></p><p>pour avoir exploré le chapitre <strong>« La Terre dans le système solaire »</strong><br>et validé <strong>${n} étape${n>1?"s":""} sur ${ALL_TASKS.length}</strong>.</p><div class="stars">${"⭐".repeat(Math.round(5*n/ALL_TASKS.length))}</div><p class="hint">6ᵉ SEGPA · Sciences · ${new Date().toLocaleDateString("fr-FR")}</p>`;
+  $("#btn-print-diplome").onclick = ()=>printEl($("#diplome").parentElement);
+}
+
+/* =====================================================================
+   INITIALISATION
+   ===================================================================== */
+applySettings(); updateProgress();
+buildSolar(); buildSizebar(); buildFlipcards();
+renderOrder("#act-order", "l1_order", PLANETS.map(p=>({id:p.id,label:p.nom,color:p.color})), PLANETS.map(p=>p.id), ORDINAUX.map((o,i)=>o+(i===0?" · la plus proche du Soleil":i===7?" · la plus loin du Soleil":"")));
+renderSort("#act-sort", "l1_sort", PLANETS.map(p=>({id:p.id,label:p.nom,color:p.color,group:p.type})), [{id:"tellurique",label:"Planètes telluriques (roche)",ico:"🪨",bg:"#fff1e6"},{id:"gazeuse",label:"Planètes gazeuses (gaz)",ico:"💨",bg:"#e6f4ff"}]);
+renderQuiz("#quiz1","q1",QUIZ1,"l1_quiz");
+buildWheel();
+buildDayNight(); buildSeasons();
+renderSort("#act-match", "l2_match", [
+  {id:"m1",label:"La Terre tourne sur elle-même",ico:"🔄",group:"rotation"},
+  {id:"m2",label:"Dure 24 heures",ico:"⏰",group:"rotation"},
+  {id:"m3",label:"Donne le jour et la nuit",ico:"🌞🌙",group:"rotation"},
+  {id:"m4",label:"La Terre fait le tour du Soleil",ico:"🛰️",group:"revolution"},
+  {id:"m5",label:"Dure 365 jours",ico:"📅",group:"revolution"},
+  {id:"m6",label:"Donne les saisons (avec l’axe penché)",ico:"🍂",group:"revolution"}
+], [{id:"rotation",label:"ROTATION",ico:"🔄",bg:"#fff1e6"},{id:"revolution",label:"RÉVOLUTION",ico:"🌍",bg:"#e6f4ff"}]);
+renderQuiz("#quiz2","q2",QUIZ2,"l2_quiz");
+renderQuiz("#quiz3","q3",QUIZ3,"article_quiz");
+buildMoon(); buildMoonQuiz();
+buildTrous();
+if("speechSynthesis" in window){ window.speechSynthesis.onvoiceschanged = ()=>{}; window.speechSynthesis.getVoices(); }
+showStep(location.hash.slice(1) || "s-home");
+</script>
+</body>
+</html>
