@@ -29,3 +29,11 @@ aucune installation : tout est dans un seul fichier.
 - Animations désactivables ; sons désactivés par défaut.
 - Progression, scores et fiche d’exposé enregistrés dans le navigateur de l’appareil
   (bouton « Tout recommencer à zéro » sur l’accueil).
+
+## Évaluation (20 minutes)
+
+Dossier `evaluation/` : `Evaluation-Chapitre-01-La-Terre-dans-le-systeme-solaire.docx` (modifiable) et sa version PDF.
+
+- Pages 1–2 : sujet élève noté sur 20 (+1 bonus), 5 exercices de 4 points : planètes manquantes sur un schéma,
+  vrai/faux, tellurique ou gazeuse, texte à trous sur rotation/révolution, nommer 4 phases de la Lune.
+- Pages 3–4 : corrigé, barème, compétences évaluées, déroulé conseillé et aménagements possibles.
